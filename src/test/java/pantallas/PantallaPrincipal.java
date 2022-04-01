@@ -96,10 +96,6 @@ class PrimeraVentana extends JFrame {
 
 
 
-
-
-
-
         setBounds(200,300,600,400);
 
         LaminaConImagen lamina1 = new LaminaConImagen();
