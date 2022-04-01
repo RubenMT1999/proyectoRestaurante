@@ -10,21 +10,20 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class PantallaCamarero{
+public class PantallaAdmin{
 
 
     public static void main(String[] args) {
-        VentanaCamarero vC = new VentanaCamarero();
+        VentanaAdmin venAd = new VentanaAdmin();
+
     }
 
 }
 
 
 
-class VentanaCamarero extends JFrame {
-    public VentanaCamarero(){
-
-        String ruta = new File("").getAbsolutePath() + "\\imagenes\\camarero.png" ;
+class VentanaAdmin extends JFrame {
+    public VentanaAdmin(){
 
 
         JPanel panelExterno = new JPanel(new GridLayout(3,1,20,20));
@@ -33,34 +32,32 @@ class VentanaCamarero extends JFrame {
 
         JButton boton1 = new JButton();
         JButton boton2 = new JButton();
-
         JButton boton3 = new JButton();
 
 
-
-        File aforo = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\aforo.ico");
-        File pedidos = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\pedidos.ico");
-        File cuentas = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\cuentas.ico");
+        File empleado = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\empleado.bmp");
+        File productos = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedido.bmp");
+        File mesas = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\mesas.bmp");
 
         try {
-            Image imagenAforo = ImageIO.read(aforo);
-            Image imagenResultado = imagenAforo.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            Image imagenEmpleado = ImageIO.read(empleado);
+            Image imagenResultado = imagenEmpleado.getScaledInstance(150,150,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
 
         try {
-            Image imagenPedidos = ImageIO.read(pedidos);
-            Image imagenResultado = imagenPedidos.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            Image imagenProductos = ImageIO.read(productos);
+            Image imagenResultado = imagenProductos.getScaledInstance(100,100,Image.SCALE_SMOOTH);
             boton2.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
 
         try {
-            Image imagenCuentas = ImageIO.read(cuentas);
-            Image imagenResultado = imagenCuentas.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            Image imagenMesas = ImageIO.read(mesas);
+            Image imagenResultado = imagenMesas.getScaledInstance(100,100,Image.SCALE_SMOOTH);
             boton3.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
@@ -75,11 +72,11 @@ class VentanaCamarero extends JFrame {
         Font fuenteBoton = new Font("Serif",Font.BOLD,15);
         Border bordeB1 = new LineBorder(Color.BLACK);
 
-        Border esteBorde = new TitledBorder(bordeB1,"AFORO",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde = new TitledBorder(bordeB1,"EMPLEADOS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
-        Border esteBorde2 = new TitledBorder(bordeB1,"PEDIDOS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde2 = new TitledBorder(bordeB1,"PRODUCTOS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
-        Border esteBorde3 = new TitledBorder(bordeB1,"CUENTAS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde3 = new TitledBorder(bordeB1,"MESAS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
 
 
@@ -92,23 +89,24 @@ class VentanaCamarero extends JFrame {
 
         setBounds(500,50,600,900);
 
-        ImagenCamarero iC = new ImagenCamarero();
-        iC.add(panelExterno);
-        add(iC);
+        ImagenAdmin imgAd = new ImagenAdmin();
+        imgAd.add(panelExterno);
+        add(imgAd);
+
         setVisible(true);
-        setSize(500,800);
+        setSize(500,840);
 
     }
 }
 
 
-class ImagenCamarero extends JPanel{
+class ImagenAdmin extends JPanel{
 
     private Image imagen;
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_camarero.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_admin.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

@@ -6,6 +6,8 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,9 +17,6 @@ public class PantallaCocinero {
 
     public static void main(String[] args) {
         VentanaCocinero venCl = new VentanaCocinero();
-        venCl.setVisible(true);
-        venCl.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        venCl.setSize(415,640);
     }
 
 
@@ -65,6 +64,8 @@ class VentanaCocinero extends JFrame {
         ImagenComanda imgCo = new ImagenComanda();
         imgCo.add(panelExterno);
         add(imgCo);
+        setVisible(true);
+        setSize(415,640);
 
     }
 }
@@ -86,4 +87,6 @@ class ImagenComanda extends JPanel{
     }
 
 }
+
+
 
