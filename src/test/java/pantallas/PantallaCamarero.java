@@ -17,7 +17,7 @@ public class PantallaCamarero{
         VentanaCamarero vC = new VentanaCamarero();
         vC.setVisible(true);
         vC.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        vC.setSize(400,600);
+        vC.setSize(500,800);
     }
 
 }
@@ -30,7 +30,7 @@ class VentanaCamarero extends JFrame {
 
         JPanel panelExterno = new JPanel(new GridLayout(3,1,20,20));
         panelExterno.setOpaque(false);
-        panelExterno.setBorder(BorderFactory.createEmptyBorder(160,0,0,0));
+        panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
 
         JButton boton1 = new JButton();
         JButton boton2 = new JButton();
@@ -38,15 +38,34 @@ class VentanaCamarero extends JFrame {
         JButton boton3 = new JButton();
 
 
-//        File camarero = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\camarero_chino.bmp");
-//
-//        try {
-//            Image imagenCamarero = ImageIO.read(camarero);
-//            Image imagenResultado = imagenCamarero.getScaledInstance(175,175,Image.SCALE_SMOOTH);
-//            boton1.setIcon(new ImageIcon(imagenResultado));
-//        } catch (Exception ex) {
-//            System.out.println("No se pudo cargar la imagen");
-//        }
+        File aforo = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\aforo.ico");
+        File pedidos = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\pedidos.ico");
+        File cuentas = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\cuentas.ico");
+
+        try {
+            Image imagenAforo = ImageIO.read(aforo);
+            Image imagenResultado = imagenAforo.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            boton1.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+
+        try {
+            Image imagenPedidos = ImageIO.read(pedidos);
+            Image imagenResultado = imagenPedidos.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            boton2.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+
+        try {
+            Image imagenCuentas = ImageIO.read(cuentas);
+            Image imagenResultado = imagenCuentas.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            boton3.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+
 
         panelExterno.add(boton1);
         panelExterno.add(boton2);
@@ -56,11 +75,11 @@ class VentanaCamarero extends JFrame {
         Font fuenteBoton = new Font("Serif",Font.BOLD,15);
         Border bordeB1 = new LineBorder(Color.BLACK);
 
-        Border esteBorde = new TitledBorder(bordeB1,"CAMARERO",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde = new TitledBorder(bordeB1,"AFORO",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
-        Border esteBorde2 = new TitledBorder(bordeB1,"CLIENTE",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde2 = new TitledBorder(bordeB1,"PEDIDOS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
-        Border esteBorde3 = new TitledBorder(bordeB1,"ADMIN",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+        Border esteBorde3 = new TitledBorder(bordeB1,"CUENTAS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
 
 
@@ -68,14 +87,10 @@ class VentanaCamarero extends JFrame {
         boton2.setBorder(esteBorde2);
         boton3.setBorder(esteBorde3);
 
-        boton1.setSize(100,100);
 
 
 
-
-
-
-        setBounds(500,100,600,900);
+        setBounds(500,50,600,900);
 
         ImagenCamarero iC = new ImagenCamarero();
         iC.add(panelExterno);
@@ -97,7 +112,7 @@ class ImagenCamarero extends JPanel{
         }catch (IOException e){
             System.out.println("La imagen no se encuentra");
         }
-        Image imagenResultado = imagen.getScaledInstance(400,600,Image.SCALE_DEFAULT);
+        Image imagenResultado = imagen.getScaledInstance(500,800,Image.SCALE_DEFAULT);
         g.drawImage(imagenResultado,0,0,null);
     }
 
