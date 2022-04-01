@@ -14,9 +14,6 @@ public class PantallaCliente{
 
     public static void main(String[] args) {
         VentanaCliente venCl = new VentanaCliente();
-        venCl.setVisible(true);
-        venCl.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        venCl.setSize(415,640);
     }
 
 
@@ -64,6 +61,8 @@ class VentanaCliente extends JFrame {
         ImagenCliente imgCl = new ImagenCliente();
         imgCl.add(panelExterno);
         add(imgCl);
+        setVisible(true);
+        setSize(415,640);
 
     }
 }

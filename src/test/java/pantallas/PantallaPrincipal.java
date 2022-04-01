@@ -36,7 +36,6 @@ class PrimeraVentana extends JFrame {
 
         JButton boton1 = new JButton();
         JButton boton2 = new JButton();
-
         JButton boton3 = new JButton();
         JButton boton4 = new JButton();
 
@@ -49,6 +48,12 @@ class PrimeraVentana extends JFrame {
             Image imagenCamarero = ImageIO.read(camarero);
             Image imagenResultado = imagenCamarero.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
+            boton1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new VentanaCamarero();
+                }
+            });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
@@ -56,6 +61,12 @@ class PrimeraVentana extends JFrame {
             Image imagenCliente = ImageIO.read(cliente);
             Image imagenResultado = imagenCliente.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton2.setIcon(new ImageIcon(imagenResultado));
+            boton2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new VentanaCliente();
+                }
+            });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
@@ -63,6 +74,12 @@ class PrimeraVentana extends JFrame {
             Image imagenAdmin = ImageIO.read(admin);
             Image imagenResultado = imagenAdmin.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton3.setIcon(new ImageIcon(imagenResultado));
+            boton3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new VentanaAdmin();
+                }
+            });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
@@ -70,6 +87,12 @@ class PrimeraVentana extends JFrame {
             Image imagenChef = ImageIO.read(chef);
             Image imagenResultado = imagenChef.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton4.setIcon(new ImageIcon(imagenResultado));
+            boton4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new VentanaCocinero();
+                }
+            });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
@@ -105,7 +128,9 @@ class PrimeraVentana extends JFrame {
         add(lamina1);
 
     }
+
 }
+
 
 
 

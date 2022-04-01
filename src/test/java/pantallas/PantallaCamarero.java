@@ -15,9 +15,6 @@ public class PantallaCamarero{
 
     public static void main(String[] args) {
         VentanaCamarero vC = new VentanaCamarero();
-        vC.setVisible(true);
-        vC.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        vC.setSize(500,800);
     }
 
 }
@@ -95,6 +92,8 @@ class VentanaCamarero extends JFrame {
         ImagenCamarero iC = new ImagenCamarero();
         iC.add(panelExterno);
         add(iC);
+        setVisible(true);
+        setSize(500,800);
 
     }
 }

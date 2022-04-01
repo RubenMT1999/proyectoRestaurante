@@ -15,9 +15,7 @@ public class PantallaAdmin{
 
     public static void main(String[] args) {
         VentanaAdmin venAd = new VentanaAdmin();
-        venAd.setVisible(true);
-        venAd.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        venAd.setSize(500,840);
+
     }
 
 }
@@ -94,6 +92,9 @@ class VentanaAdmin extends JFrame {
         ImagenAdmin imgAd = new ImagenAdmin();
         imgAd.add(panelExterno);
         add(imgAd);
+
+        setVisible(true);
+        setSize(500,840);
 
     }
 }
