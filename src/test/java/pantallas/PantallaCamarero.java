@@ -106,7 +106,7 @@ class ImagenCamarero extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_camarero.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_camarero.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
