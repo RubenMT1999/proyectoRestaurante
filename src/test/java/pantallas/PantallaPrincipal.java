@@ -13,9 +13,6 @@ import java.io.IOException;
 public class PantallaPrincipal{
 
 
-
-
-
     public static void main(String[] args) {
         PrimeraVentana ven1 = new PrimeraVentana();
         ven1.setVisible(true);
