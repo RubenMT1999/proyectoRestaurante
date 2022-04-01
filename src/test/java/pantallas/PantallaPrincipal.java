@@ -38,7 +38,7 @@ class PrimeraVentana extends JFrame {
         JButton boton3 = new JButton();
         JButton boton4 = new JButton();
 
-        File camarero = new File("C:\\Users\\daw20\\Desktop\\ventanas_restaurante\\src\\main\\java\\fotos\\camarero_chino.bmp");
+        File camarero = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\camarero_chino.bmp");
 
         try {
             Image imagenCamarero = ImageIO.read(camarero);
@@ -92,7 +92,7 @@ class LaminaConImagen extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\ventanas_restaurante\\src\\main\\java\\fotos\\foto_chino.png");
+        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\foto_chino.png");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
