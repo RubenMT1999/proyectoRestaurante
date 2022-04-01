@@ -38,12 +38,36 @@ class PrimeraVentana extends JFrame {
         JButton boton3 = new JButton();
         JButton boton4 = new JButton();
 
-        File camarero = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\camarero_chino.bmp");
+        File camarero = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\camarero_chino.bmp");
+        File cliente = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\cliente.bmp");
+        File admin = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\admin.bmp");
+        File chef = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\chef.bmp");
 
         try {
             Image imagenCamarero = ImageIO.read(camarero);
             Image imagenResultado = imagenCamarero.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+        try {
+            Image imagenCliente = ImageIO.read(cliente);
+            Image imagenResultado = imagenCliente.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton2.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+        try {
+            Image imagenAdmin = ImageIO.read(admin);
+            Image imagenResultado = imagenAdmin.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton3.setIcon(new ImageIcon(imagenResultado));
+        } catch (Exception ex) {
+            System.out.println("No se pudo cargar la imagen");
+        }
+        try {
+            Image imagenChef = ImageIO.read(chef);
+            Image imagenResultado = imagenChef.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton4.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
@@ -92,7 +116,7 @@ class LaminaConImagen extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\foto_chino.png");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\foto_chino.png");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
