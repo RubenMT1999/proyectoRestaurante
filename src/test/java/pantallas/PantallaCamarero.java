@@ -38,9 +38,9 @@ class VentanaCamarero extends JFrame {
         JButton boton3 = new JButton();
 
 
-        File aforo = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\aforo.ico");
-        File pedidos = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\pedidos.ico");
-        File cuentas = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\cuentas.ico");
+        File aforo = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\aforo.ico");
+        File pedidos = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedidos.ico");
+        File cuentas = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\cuentas.ico");
 
         try {
             Image imagenAforo = ImageIO.read(aforo);
