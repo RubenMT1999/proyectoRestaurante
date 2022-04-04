@@ -17,7 +17,7 @@ public class FormularioMesas{
         VenFormMesas m1 = new VenFormMesas();
         m1.setVisible(true);
         m1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        m1.setSize(500,800);
+        m1.setSize(500,600);
     }
 
 }
@@ -109,13 +109,13 @@ class ImagenFormMesas extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\NitroPC\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_mesas.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_mesas.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
             System.out.println("La imagen no se encuentra");
         }
-        Image imagenResultado = imagen.getScaledInstance(500,800,Image.SCALE_DEFAULT);
+        Image imagenResultado = imagen.getScaledInstance(500,600,Image.SCALE_DEFAULT);
         g.drawImage(imagenResultado,0,0,null);
     }
 
