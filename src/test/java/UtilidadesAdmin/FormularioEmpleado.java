@@ -131,7 +131,7 @@ class ImagenFormEmpleado extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\NitroPC\\IdeaProjects\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

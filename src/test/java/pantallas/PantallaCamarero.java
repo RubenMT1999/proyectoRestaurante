@@ -38,9 +38,9 @@ class VentanaCamarero extends JFrame {
 
 
 
-        File aforo = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\aforo.ico");
-        File pedidos = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\pedidos.ico");
-        File cuentas = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\cuentas.ico");
+        File aforo = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\aforo.ico");
+        File pedidos = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedidos.ico");
+        File cuentas = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\cuentas.ico");
 
         try {
             Image imagenAforo = ImageIO.read(aforo);
@@ -108,7 +108,7 @@ class ImagenCamarero extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_camarero.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_camarero.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
