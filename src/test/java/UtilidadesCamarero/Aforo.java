@@ -1,81 +1,62 @@
 package UtilidadesCamarero;
 
-
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Aforo {
 
-    public static void main(String[] args) {
-        VenFormAforo m1 = new VenFormAforo();
-        m1.setVisible(true);
-        m1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        m1.setSize(500,300);
-    }
-}
+class Aforo extends JFrame {
+    public Aforo(){
 
-class VenFormAforo extends JFrame {
-    public VenFormAforo(){
+        JPanel panelExterno = new JPanel(new GridLayout(10,10,10,10));
+        panelExterno.setOpaque(false);
+        panelExterno.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
 
+        JLabel labelMesa1 = new JLabel("Mesa");
+        JTextField textoMesa1 = new JTextField();
+        JButton botonLibre = new JButton("Liberar");
+        JButton botonOcupado = new JButton("Ocupar");
 
-        String[] columnNames = {"Mesa","Estado"};
+        botonLibre.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textoMesa1.setBackground(Color.green);
+            }
+        } );
 
-        Object[][] data = {
-                { "aaa", "dato2" },
-                { "dato3", "dato4" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato7", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-                { "dato1", "dato2" },
-        };
+        botonOcupado.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textoMesa1.setBackground(Color.RED);
+            }
+        } );
 
-        JTable miTabla = new JTable(data,columnNames);
-
-        JScrollPane scroll = new JScrollPane(miTabla);
-
-
-        int A = this.getWidth();
-        int B = this.getHeight();
-
-        miTabla.setSize(A,B);
-        JPanel panelExterno = new JPanel(new GridLayout());
-        panelExterno.add(scroll);
-
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        miTabla.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        miTabla.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        scroll.setVisible(true);
 
         setBounds(500,50,600,900);
 
+        panelExterno.add(labelMesa1);
+        panelExterno.add(textoMesa1);
+        panelExterno.add(botonLibre);
+        panelExterno.add(botonOcupado);
         add(panelExterno);
 
-
     }
+
+    public static void main(String[] args) {
+        Aforo a1 = new Aforo();
+        a1.setVisible(true);
+        a1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        a1.setSize(400,400);
+    }
+
+
 }
+
 
 
 
