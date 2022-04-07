@@ -9,7 +9,7 @@ public class UtilidadesBBDD {
     private static final String usuario = "root";
     private static final String password = "1234";
 
-    static Connection conectarConBD() {
+    public static Connection conectarConBD() {
         Connection conexion;
         try {
             conexion = DriverManager.getConnection(url, usuario, password);
@@ -19,7 +19,7 @@ public class UtilidadesBBDD {
         }
         return conexion;
     }
-    static void cerrarConexion(Connection con) {
+    public static void cerrarConexion(Connection con) {
         try {
             // Cerramos conexiones
             if (con !=null) {

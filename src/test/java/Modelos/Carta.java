@@ -25,7 +25,12 @@ public class Carta {
         this.precio = c1.getPrecio();
     }
 
-    public Carta(){}
+    public Carta(int id, String nombre, String descripcion, double precio){
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+    }
 
     public int getId() {
         return id;
