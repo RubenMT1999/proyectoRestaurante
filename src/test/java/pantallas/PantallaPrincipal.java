@@ -29,6 +29,13 @@ public class PantallaPrincipal {
 class PrimeraVentana extends JFrame {
     public PrimeraVentana(){
 
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);
+        pack();
+
 
         JPanel panelExterno = new JPanel(new GridLayout(2,2,20,20));
         panelExterno.setOpaque(false);

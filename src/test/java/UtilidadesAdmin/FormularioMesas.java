@@ -109,7 +109,7 @@ class ImagenFormMesas extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_mesas.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_mesas.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
