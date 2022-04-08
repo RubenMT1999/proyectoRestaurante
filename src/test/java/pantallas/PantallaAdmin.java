@@ -35,9 +35,9 @@ class VentanaAdmin extends JFrame {
         JButton boton3 = new JButton();
 
 
-        File empleado = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\empleado.bmp");
-        File productos = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedido.bmp");
-        File mesas = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\mesas.bmp");
+        File empleado = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\empleado.bmp");
+        File productos = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\pedido.bmp");
+        File mesas = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\mesas.bmp");
 
         try {
             Image imagenEmpleado = ImageIO.read(empleado);
@@ -106,7 +106,7 @@ class ImagenAdmin extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_admin.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_admin.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

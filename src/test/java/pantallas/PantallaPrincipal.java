@@ -39,10 +39,10 @@ class PrimeraVentana extends JFrame {
         JButton boton3 = new JButton();
         JButton boton4 = new JButton();
 
-        File camarero = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\camarero_chino.bmp");
-        File cliente = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\cliente.bmp");
-        File admin = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\admin.bmp");
-        File chef = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\chef.bmp");
+        File camarero = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\camarero_chino.bmp");
+        File cliente = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\cliente.bmp");
+        File admin = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\admin.bmp");
+        File chef = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\chef.bmp");
 
         try {
             Image imagenCamarero = ImageIO.read(camarero);
@@ -140,7 +140,7 @@ class LaminaConImagen extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\foto_chino.png");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\foto_chino.png");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

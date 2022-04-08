@@ -18,7 +18,7 @@ public class ObtenerProductos extends UtilidadesBBDD {
 
 
         try {
-            PreparedStatement query = con.prepareStatement("SELECT id, nombre, descripcion, precio  FROM carta");
+            PreparedStatement query = con.prepareStatement("SELECT id, nombre, descripcion, categoria, precio  FROM carta");
             ResultSet rs = query.executeQuery();
 
             //Recorremos los datos
@@ -26,6 +26,7 @@ public class ObtenerProductos extends UtilidadesBBDD {
              Carta carta = new Carta(rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
+                        Categoria.values()[rs.getInt("categoria")],
                         rs.getDouble("precio"));
              Menu.add(carta);
 

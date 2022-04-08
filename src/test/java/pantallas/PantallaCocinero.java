@@ -32,7 +32,7 @@ class VentanaCocinero extends JFrame {
         JButton boton1 = new JButton();
 
 
-        File menu = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\comanda.bmp");
+        File menu = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\comanda.bmp");
         try {
             Image imagenComanda = ImageIO.read(menu);
             Image imagenResultado = imagenComanda.getScaledInstance(175,175,Image.SCALE_SMOOTH);
@@ -76,7 +76,7 @@ class ImagenComanda extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_cocinero.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_cocinero.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
