@@ -29,7 +29,7 @@ class VentanaCliente extends JFrame {
         JButton boton1 = new JButton();
 
 
-        File menu = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\menu.bmp");
+        File menu = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\menu.bmp");
         try {
             Image imagenMenu = ImageIO.read(menu);
             Image imagenResultado = imagenMenu.getScaledInstance(175,175,Image.SCALE_SMOOTH);
@@ -73,7 +73,7 @@ class ImagenCliente extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondoCliente.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondoCliente.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
