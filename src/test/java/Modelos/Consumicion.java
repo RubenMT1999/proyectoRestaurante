@@ -5,14 +5,14 @@ import java.util.Objects;
 public class Consumicion {
 
     private int id;
-    private int id_producto;
+    private String id_producto;
     private int servido;
     private int cantidad_pedida;
     private int cantidad_servida;
     private Double precio;
     private int codigo_pedido;
 
-    public Consumicion(int id, int id_producto, int servido, int cantidad_pedida, int cantidad_servida, Double precio, int codigo_pedido) {
+    public Consumicion(int id, String id_producto, int servido, int cantidad_pedida, int cantidad_servida, Double precio, int codigo_pedido) {
         this.id = id;
         this.id_producto = id_producto;
         this.servido = servido;
@@ -31,7 +31,7 @@ public class Consumicion {
         this.codigo_pedido = c1.getCodigo_pedido();
     }
 
-    public Consumicion(int id_producto, int cantidad_pedida) {
+    public Consumicion(String id_producto, int cantidad_pedida) {
         this.id_producto = id_producto;
         this.cantidad_pedida = cantidad_pedida;
     }
@@ -44,11 +44,11 @@ public class Consumicion {
         this.id = id;
     }
 
-    public int getId_producto() {
+    public String getId_producto() {
         return id_producto;
     }
 
-    public void setId_producto(int id_producto) {
+    public void setId_producto(String id_producto) {
         this.id_producto = id_producto;
     }
 

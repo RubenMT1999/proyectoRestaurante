@@ -13,21 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObtenerComandas extends UtilidadesBBDD {
-      {
-        public static List<Carta> obtenerProductos) {
+        public static List<Consumicion> ObtenerComandas() {
             List<Consumicion> Menu = new ArrayList<>();
 
             Connection con = conectarConBD();
 
 
             try {
-                PreparedStatement query = con.prepareStatement("SELECT id, nombre, descripcion, categoria, precio  FROM carta");
+                PreparedStatement query = con.prepareStatement("SELECT c2.nombre, c.cantidad_pedida  FROM consumicion c join carta c2 on c2.id = c.id_producto");
                 ResultSet rs = query.executeQuery();
 
                 //Recorremos los datos
                 while (rs.next()) {
                     Consumicion consumicion = new Consumicion(
-                            rs.getInt("id_producto"),
+                            rs.getString("id_producto"),
                             rs.getInt("cantidad_pedida"));
 
                     Menu.add(consumicion);

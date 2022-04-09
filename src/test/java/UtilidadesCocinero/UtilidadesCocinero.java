@@ -4,12 +4,16 @@ package UtilidadesCocinero;
 
 
 
+import Modelos.Consumicion;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class UtilidadesCocinero {
     public static void main(String[] args) {
@@ -24,7 +28,7 @@ public class UtilidadesCocinero {
 class VentanaComanda extends JFrame{
     public VentanaComanda() {
 
-        JPanel panelExterno = new JPanel(new GridLayout(2,1,10,10));
+        JPanel panelExterno = new JPanel(new GridLayout(3,2,10,10));
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
 
@@ -57,9 +61,37 @@ class VentanaComanda extends JFrame{
         panelExterno.add(panelLabel1);
 
 
+
+
         ImagenComandas img1 = new ImagenComandas();
         img1.add(panelExterno);
         add(img1);
+
+        String[] columnNames = {"Mesa","Estado"};
+
+        List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
+
+        Object[][] data = {
+                {"aaa", "dato2"},
+                {"dato3", "dato4"},
+                {"dato1", "dato2"},
+
+        };
+
+        for (Consumicion c1 : comandas){
+            Object[][] data2 = {
+                    {c1.getId_producto(),c1.getCantidad_pedida()}
+            };
+            JTable tabla1 = new JTable(data2, columnNames);
+            JPanel panelTabla = new JPanel(new GridLayout(1,2,0,0));
+
+            panelTabla.add(tabla1);
+            panelExterno.add(panelTabla);
+        }
+
+
+
+
 
 
 
