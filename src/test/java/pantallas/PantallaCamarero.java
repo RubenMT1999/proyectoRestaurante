@@ -22,12 +22,19 @@ public class PantallaCamarero{
 
 
 class VentanaCamarero extends JFrame {
+
+    private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
+
     public VentanaCamarero(){
 
-        String ruta = new File("").getAbsolutePath() + "\\imagenes\\camarero.png" ;
 
 
-        JPanel panelExterno = new JPanel(new GridLayout(3,1,20,20));
+
+        JPanel panelExterno = crearPanelImagenFondo((new GridLayout(3,1,20,20)));
+        setContentPane(panelExterno);
+        setVisible(true);
+        setSize(new Dimension(500,900));
+        setResizable(false);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
 
@@ -38,9 +45,9 @@ class VentanaCamarero extends JFrame {
 
 
 
-        File aforo = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\aforo.ico");
-        File pedidos = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\pedidos.ico");
-        File cuentas = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\cuentas.ico");
+        File aforo = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\aforo.ico");
+        File pedidos = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedidos.ico");
+        File cuentas = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\cuentas.ico");
 
         try {
             Image imagenAforo = ImageIO.read(aforo);
@@ -92,30 +99,28 @@ class VentanaCamarero extends JFrame {
 
         setBounds(500,50,600,900);
 
-        ImagenCamarero iC = new ImagenCamarero();
-        iC.add(panelExterno);
-        add(iC);
-        setVisible(true);
-        setSize(500,800);
+
+
 
     }
-}
+
+    private JPanel crearPanelImagenFondo(GridLayout gridLayout){
+        JPanel panel = new JPanel(){
+            public void paintComponent (Graphics g ){
+                super.paintComponent(g);
+                g.drawImage(fondoPantalla.getImage(),0,0,null);
+            }
+        };
+        return panel;
+    }
 
 
-class ImagenCamarero extends JPanel{
-
-    private Image imagen;
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_camarero.jpg");
-        try{
-            imagen= ImageIO.read(miImagen);
-        }catch (IOException e){
-            System.out.println("La imagen no se encuentra");
-        }
-        Image imagenResultado = imagen.getScaledInstance(500,800,Image.SCALE_DEFAULT);
-        g.drawImage(imagenResultado,0,0,null);
+    private static  String getRutaImagenFondo(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\fondo_camarero.jpg";
     }
 
 }
+
+
+
