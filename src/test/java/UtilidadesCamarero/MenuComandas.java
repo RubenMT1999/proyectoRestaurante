@@ -3,6 +3,7 @@ package UtilidadesCamarero;
 
 import Modelos.Carta;
 import Modelos.Empleado;
+import Modelos.tipoEmpleado;
 import UtilidadesCliente.ObtenerProductos;
 
 import javax.imageio.ImageIO;
@@ -38,7 +39,7 @@ class MenuComandas extends JFrame {
         JTable tabla1 = new JTable(model);
 
 
-        model.insertRow(1,new Object[]{"Calamares",4,2.5});
+        model.insertRow(0,new Object[]{"Calamares",4,2.5});
 
 
 
@@ -67,6 +68,18 @@ class MenuComandas extends JFrame {
             comboProducto.addItem(e.getNombre());
         }
 
+        List<Empleado> Empleados = ObtenerEmpleados.obtenerEmpleados();
+        List<Empleado> listaCamareros = new ArrayList<>();
+
+        for (Empleado e : Empleados){
+            if (e.getTipoEmpleado().equals(tipoEmpleado.camarero)){
+                listaCamareros.add(e);
+            }
+        }
+
+        for (Empleado q : listaCamareros){
+            comboCamarero.addItem(q.getNombre());
+        }
 
 
 

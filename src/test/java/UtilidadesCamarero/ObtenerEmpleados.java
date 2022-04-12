@@ -16,7 +16,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 public class ObtenerEmpleados {
 
-    public List<Empleado> obtenerEmpleados(){
+    public static List<Empleado> obtenerEmpleados(){
 
         List<Empleado> listaEmpleados = new ArrayList<>();
 
