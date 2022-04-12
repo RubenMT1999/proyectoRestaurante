@@ -7,7 +7,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 
 public class PantallaAdmin{
@@ -23,10 +22,22 @@ public class PantallaAdmin{
 
 
 class VentanaAdmin extends JFrame {
+
+    private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
+
     public VentanaAdmin(){
 
 
-        JPanel panelExterno = new JPanel(new GridLayout(3,1,20,20));
+        JPanel panelExterno = crearPanelImagenFondo();
+
+        setContentPane(panelExterno);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setSize(new Dimension(1200,800));
+        setResizable(false);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
 
@@ -35,13 +46,13 @@ class VentanaAdmin extends JFrame {
         JButton boton3 = new JButton();
 
 
-        File empleado = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\empleado.bmp");
-        File productos = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\pedido.bmp");
-        File mesas = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\mesas.bmp");
+        File empleado = new File(getRutaEmpleado());
+        File productos = new File(getRutaProductos());
+        File mesas = new File(getRutaMesas());
 
         try {
             Image imagenEmpleado = ImageIO.read(empleado);
-            Image imagenResultado = imagenEmpleado.getScaledInstance(150,150,Image.SCALE_SMOOTH);
+            Image imagenResultado = imagenEmpleado.getScaledInstance(100,100,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
@@ -89,31 +100,44 @@ class VentanaAdmin extends JFrame {
 
         setBounds(500,50,600,900);
 
-        ImagenAdmin imgAd = new ImagenAdmin();
-        imgAd.add(panelExterno);
-        add(imgAd);
 
         setVisible(true);
         setSize(500,840);
 
     }
-}
+    private JPanel crearPanelImagenFondo() {
+        JPanel panel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoPantalla.getImage(), 0, 0, null);
+            }
+        };
+        return panel;
+    }
 
+    private static  String getRutaImagenFondo(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\fondo_admin.jpg";
+    }
 
-class ImagenAdmin extends JPanel{
+    private static String getRutaEmpleado(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\empleado.bmp";
 
-    private Image imagen;
+    }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_admin.jpg");
-        try{
-            imagen= ImageIO.read(miImagen);
-        }catch (IOException e){
-            System.out.println("La imagen no se encuentra");
-        }
-        Image imagenResultado = imagen.getScaledInstance(500,800,Image.SCALE_DEFAULT);
-        g.drawImage(imagenResultado,0,0,null);
+    private static String getRutaProductos(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\pedido.bmp";
+
+    }
+
+    private static String getRutaMesas(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\mesas.bmp";
+
     }
 
 }
+
+

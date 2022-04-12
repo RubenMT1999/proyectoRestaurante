@@ -35,6 +35,9 @@ class VentanaCamarero extends JFrame {
         setVisible(true);
         setSize(new Dimension(500,900));
         setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
 
@@ -45,9 +48,9 @@ class VentanaCamarero extends JFrame {
 
 
 
-        File aforo = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\aforo.ico");
-        File pedidos = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\pedidos.ico");
-        File cuentas = new File("C:\\Users\\dragu\\IdeaProjects\\proyectoRestaurante\\imagenes\\cuentas.ico");
+        File aforo = new File(getRutaAforo());
+        File pedidos = new File(getRutaPedidos());
+        File cuentas = new File(getRutaCuentas());
 
         try {
             Image imagenAforo = ImageIO.read(aforo);
@@ -120,6 +123,26 @@ class VentanaCamarero extends JFrame {
         return ruta + "\\imagenes\\fondo_camarero.jpg";
     }
 
+
+
+    private static String getRutaAforo(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\aforo.ico";
+
+    }
+
+
+    private static String getRutaPedidos(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\pedidos.ico";
+
+    }
+
+    private static String getRutaCuentas(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\cuentas.ico";
+
+    }
 }
 
 

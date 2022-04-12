@@ -27,17 +27,21 @@ public class PantallaPrincipal {
 
 
 class PrimeraVentana extends JFrame {
+
+    private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
+
     public PrimeraVentana(){
 
+
+
+        JPanel panelExterno = crearPanelImagenFondo((new GridLayout(2,2,20,20)));
+
+        setContentPane(panelExterno);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
-        pack();
-
-
-        JPanel panelExterno = new JPanel(new GridLayout(2,2,20,20));
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(75,0,0,0));
 
@@ -46,10 +50,10 @@ class PrimeraVentana extends JFrame {
         JButton boton3 = new JButton();
         JButton boton4 = new JButton();
 
-        File camarero = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\camarero_chino.bmp");
-        File cliente = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\cliente.bmp");
-        File admin = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\admin.bmp");
-        File chef = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\chef.bmp");
+        File camarero = new File(getRutaCamarero());
+        File cliente = new File(getRutaCliente());
+        File admin = new File(getRutaAdmin());
+        File chef = new File(getRutaChef());
 
         try {
             Image imagenCamarero = ImageIO.read(camarero);
@@ -130,32 +134,50 @@ class PrimeraVentana extends JFrame {
 
         setBounds(200,300,600,400);
 
-        LaminaConImagen lamina1 = new LaminaConImagen();
-        lamina1.add(panelExterno);
-        add(lamina1);
+
 
     }
 
+    private JPanel crearPanelImagenFondo(GridLayout gridLayout) {
+        JPanel panel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoPantalla.getImage(), 0, 0, null);
+            }
+        };
+        return panel;
+    }
+
+    private static  String getRutaImagenFondo(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\foto_chino.png";
+    }
+
+    private static String getRutaCamarero(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\camarero_chino.bmp";
+
+    }
+    private static String getRutaCliente(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\cliente.bmp";
+
+    }
+
+    private static String getRutaAdmin(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\admin.bmp";
+
+    }
+
+    private static String getRutaChef(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\chef.bmp";
+
+    }
 }
 
 
 
 
-class LaminaConImagen extends JPanel{
-
-    private Image imagen;
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\foto_chino.png");
-        try{
-            imagen= ImageIO.read(miImagen);
-        }catch (IOException e){
-            System.out.println("La imagen no se encuentra");
-        }
-        Image imagenResultado = imagen.getScaledInstance(900,600,Image.SCALE_DEFAULT);
-        g.drawImage(imagenResultado,0,0,null);
-    }
-
-}
 
