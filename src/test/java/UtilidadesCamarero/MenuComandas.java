@@ -2,6 +2,7 @@ package UtilidadesCamarero;
 
 
 import Modelos.Carta;
+import Modelos.Empleado;
 import UtilidadesCliente.ObtenerProductos;
 
 import javax.imageio.ImageIO;
@@ -65,6 +66,10 @@ class MenuComandas extends JFrame {
         for (Carta e : Menu){
             comboProducto.addItem(e.getNombre());
         }
+
+
+
+
 
         System.out.println(comboProducto.getSelectedItem().toString());
 
