@@ -6,6 +6,7 @@ import UtilidadesCliente.ObtenerProductos;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,16 @@ class MenuComandas extends JFrame {
 
         JButton botonAniadir = new JButton("+");
 
-        JTable tabla1 = new JTable(7,3);
+        String data[][] = {};
+        String col[] = {"Producto","Cantidad","Precio"};
+
+        DefaultTableModel model = new DefaultTableModel(data,col);
+        JTable tabla1 = new JTable(model);
+
+
+        model.insertRow(1,new Object[]{"Calamares",4,2.5});
+
+
 
         JScrollPane scrollPane = new JScrollPane(tabla1);
         tabla1.setFillsViewportHeight(true);
