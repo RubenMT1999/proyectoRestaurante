@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class UtilidadesBBDD {
 
-    private static final String url = "jdbc:mariadb://localhost:3306/mirestaurante";
+    private static final String url = "jdbc:mariadb://localhost:3306/restaurante";
     private static final String usuario = "root";
     private static final String password = "1234";
 
