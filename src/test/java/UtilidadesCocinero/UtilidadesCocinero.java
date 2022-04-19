@@ -11,6 +11,7 @@ import Modelos.Consumicion;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,8 @@ public class UtilidadesCocinero {
 
 class VentanaComanda extends JFrame{
     public VentanaComanda() {
+
+
 
         JPanel panelExterno = new JPanel(new GridLayout(2,1,10,10));
         panelExterno.setOpaque(false);
@@ -61,13 +64,9 @@ class VentanaComanda extends JFrame{
         panelMesa.add(labelMesa);
 
 
-
-
         JPanel panelLabel1 = new JPanel(new GridLayout(1,1,10,10));
         panelLabel1.add(numMesa);
         panelLabel1.add(botonBuscar);
-
-
 
 
 
@@ -80,18 +79,42 @@ class VentanaComanda extends JFrame{
         List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
 
         String data[][] = {};
-        String columnNames[] = {"Producto", "Cantidad"};
+        String columnNames[] = {"Producto", "Cantidad",};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable tabla1 = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(tabla1);
+
+
+
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.add(tabla1);
         tabla1.setFillsViewportHeight(true);
+
+        JButton botonSumar = new JButton("+");
+        botonSumar.setSize(10,10);
+        botonSumar.setVisible(true);
+
+        JButton botonRestar = new JButton("-");
+        botonSumar.setSize(10,10);
+        botonSumar.setVisible(true);
+
 
 
 
         for (Consumicion c1 : comandas){
+
             model.insertRow(0, new Object[]{c1.getId_producto(), c1.getCantidad_pedida()});
+
+
         }
+
+        int filaSeleccionada = tabla1.getSelectedRow();
+
+        JPanel botonesFinales = new JPanel(new GridLayout(1,2));
+
+        botonesFinales.add(botonSumar);
+        botonesFinales.add(botonRestar);
 
 
 
@@ -99,15 +122,20 @@ class VentanaComanda extends JFrame{
 
         panelTabla.add(scrollPane);
 
-        panelExterno.add(panelMesa);
+
+
+        panelExterno.add(labelMesa);
         panelExterno.add(panelLabel1);
-        panelExterno.add(panelTabla);
+        panelExterno.add(tabla1);
+        panelExterno.add(botonesFinales);
+
+
+        if (filaSeleccionada == 1){
+
+        }
 
 
 
-
-
-            panelExterno.add(tabla1);
         }
 
 
