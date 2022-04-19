@@ -1,4 +1,5 @@
 package UtilidadesCliente;
+
 import Modelos.Carta;
 import Modelos.Categoria;
 import UtilidadesBBDD.UtilidadesBBDD;
@@ -44,6 +45,4 @@ public class ObtenerProductos extends UtilidadesBBDD {
     }
 
 
-
-
-    }
+}
