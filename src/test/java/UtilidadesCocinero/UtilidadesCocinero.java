@@ -10,6 +10,7 @@ import Modelos.Consumicion;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class UtilidadesCocinero {
 class VentanaComanda extends JFrame{
     public VentanaComanda() {
 
-        JPanel panelExterno = new JPanel(new GridLayout(3,2,10,10));
+        JPanel panelExterno = new JPanel(new GridLayout(2,1,10,10));
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
 
@@ -42,7 +43,11 @@ class VentanaComanda extends JFrame{
         numMesa.addItem("3");
         numMesa.addItem("4");
         numMesa.addItem("5");
-        numMesa.addItem("6");
+        numMesa.addItem("7");
+        numMesa.addItem("8");
+        numMesa.addItem("9");
+        numMesa.addItem("10");
+
 
         JButton botonBuscar = new JButton("Buscar");
 
@@ -51,14 +56,17 @@ class VentanaComanda extends JFrame{
 
         labelMesa.setFont(newFont);
 
+        JPanel panelMesa = new JPanel(new GridLayout(1,1));
+
+        panelMesa.add(labelMesa);
 
 
-        panelExterno.add(labelMesa);
 
-        JPanel panelLabel1 = new JPanel(new GridLayout(1,2,10,10));
+
+        JPanel panelLabel1 = new JPanel(new GridLayout(1,1,10,10));
         panelLabel1.add(numMesa);
         panelLabel1.add(botonBuscar);
-        panelExterno.add(panelLabel1);
+
 
 
 
@@ -67,26 +75,39 @@ class VentanaComanda extends JFrame{
         img1.add(panelExterno);
         add(img1);
 
-        String[] columnNames = {"Mesa","Estado"};
+
 
         List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
 
-        Object[][] data = {
-                {"aaa", "dato2"},
-                {"dato3", "dato4"},
-                {"dato1", "dato2"},
+        String data[][] = {};
+        String columnNames[] = {"Producto", "Cantidad"};
 
-        };
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        JTable tabla1 = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(tabla1);
+        tabla1.setFillsViewportHeight(true);
+
+
 
         for (Consumicion c1 : comandas){
-            Object[][] data2 = {
-                    {c1.getId_producto(),c1.getCantidad_pedida()}
-            };
-            JTable tabla1 = new JTable(data2, columnNames);
-            JPanel panelTabla = new JPanel(new GridLayout(1,2,0,0));
+            model.insertRow(0, new Object[]{c1.getId_producto(), c1.getCantidad_pedida()});
+        }
 
-            panelTabla.add(tabla1);
-            panelExterno.add(panelTabla);
+
+
+        JPanel panelTabla = new JPanel(new GridLayout(1,0));
+
+        panelTabla.add(scrollPane);
+
+        panelExterno.add(panelMesa);
+        panelExterno.add(panelLabel1);
+        panelExterno.add(panelTabla);
+
+
+
+
+
+            panelExterno.add(tabla1);
         }
 
 
@@ -100,7 +121,7 @@ class VentanaComanda extends JFrame{
 
     }
 
-}
+
 
 class ImagenComandas extends JPanel{
 

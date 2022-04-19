@@ -23,9 +23,8 @@ public class ObtenerComandas extends UtilidadesBBDD {
 
                 //Recorremos los datos
                 while (rs.next()) {
-                    Modelos.Consumicion consumicion = new Consumicion(
-                            rs.getString("id_producto"),
-                            rs.getInt("cantidad_pedida"));
+                    Consumicion consumicion = new Consumicion(rs.getString("c2.nombre"),
+                            rs.getInt("c.cantidad_pedida"));
 
                     Menu.add(consumicion);
 
