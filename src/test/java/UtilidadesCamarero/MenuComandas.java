@@ -118,6 +118,7 @@ class MenuComandas extends JFrame {
                 model.setValueAt(comboCantidad.getText(), i, 1);
                 model.setValueAt(Precio*Integer.parseInt(comboCantidad.getText()), i, 2);
             }
+
         });
 
 
