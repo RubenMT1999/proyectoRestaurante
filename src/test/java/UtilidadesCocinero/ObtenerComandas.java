@@ -1,7 +1,5 @@
 package UtilidadesCocinero;
 
-import Modelos.Carta;
-import Modelos.Categoria;
 import Modelos.Consumicion;
 import UtilidadesBBDD.UtilidadesBBDD;
 
@@ -25,7 +23,7 @@ public class ObtenerComandas extends UtilidadesBBDD {
 
                 //Recorremos los datos
                 while (rs.next()) {
-                    Consumicion consumicion = new Consumicion(
+                    Modelos.Consumicion consumicion = new Consumicion(
                             rs.getString("id_producto"),
                             rs.getInt("cantidad_pedida"));
 

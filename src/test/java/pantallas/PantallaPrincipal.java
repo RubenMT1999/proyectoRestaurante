@@ -75,7 +75,7 @@ class PrimeraVentana extends JFrame {
             boton2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new VentanaCliente();
+                   new VentanaCliente();
                 }
             });
         } catch (Exception ex) {
@@ -101,7 +101,7 @@ class PrimeraVentana extends JFrame {
             boton4.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new VentanaCocinero();
+                   new VentanaCocinero();
                 }
             });
         } catch (Exception ex) {

@@ -4,12 +4,12 @@ package UtilidadesCocinero;
 
 
 
+
 import Modelos.Consumicion;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -108,7 +108,7 @@ class ImagenComandas extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
