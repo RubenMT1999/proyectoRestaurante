@@ -3,13 +3,19 @@ package UtilidadesCamarero;
 
 import Modelos.Carta;
 import Modelos.Empleado;
+import Modelos.Mesa;
 import Modelos.tipoEmpleado;
+import UtilidadesBBDD.ObtenerMesas;
 import UtilidadesCliente.ObtenerProductos;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +37,7 @@ class MenuComandas extends JFrame {
 
 
         JButton botonAniadir = new JButton("+");
+        JButton botonActualizar = new JButton("Actualizar");
 
         String data[][] = {};
         String col[] = {"Producto","Cantidad","Precio"};
@@ -39,7 +46,7 @@ class MenuComandas extends JFrame {
         JTable tabla1 = new JTable(model);
 
 
-        model.insertRow(0,new Object[]{"Calamares",4,2.5});
+
 
 
 
@@ -48,10 +55,11 @@ class MenuComandas extends JFrame {
 
 
         panelCombo.add(comboMesa);
-        panelCombo.add(comboProducto);
         panelCombo.add(comboCamarero);
+        panelCombo.add(comboProducto);
         panelCombo.add(comboCantidad);
         panelCombo.add(botonAniadir,1,3);
+        panelCombo.add(botonActualizar);
 
 
         JPanel panelTabla = new JPanel(new GridLayout(1,3));
@@ -70,6 +78,7 @@ class MenuComandas extends JFrame {
 
         List<Empleado> Empleados = ObtenerEmpleados.obtenerEmpleados();
         List<Empleado> listaCamareros = new ArrayList<>();
+        List<Mesa> listaMesas = ObtenerMesas.obtenerMesas();
 
         for (Empleado e : Empleados){
             if (e.getTipoEmpleado().equals(tipoEmpleado.camarero)){
@@ -80,6 +89,36 @@ class MenuComandas extends JFrame {
         for (Empleado q : listaCamareros){
             comboCamarero.addItem(q.getNombre());
         }
+
+        for (Mesa m : listaMesas){
+            if (m.getLibre()==0){
+                comboMesa.addItem(m.getNumeroMesa());
+            }
+        }
+
+        botonAniadir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Double Precio = Menu.get(comboProducto.getSelectedIndex()).getPrecio();
+
+                model.insertRow(0,new Object[]{comboProducto.getSelectedItem().toString(),
+                        comboCantidad.getText(),Precio* Integer.parseInt(comboCantidad.getText()) });
+
+
+            }
+        });
+
+        botonActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tabla1.getSelectedRow();
+                Double Precio = Menu.get(comboProducto.getSelectedIndex()).getPrecio();
+                model.setValueAt(comboProducto.getSelectedItem(), i, 0);
+                model.setValueAt(comboCantidad.getText(), i, 1);
+                model.setValueAt(Precio*Integer.parseInt(comboCantidad.getText()), i, 2);
+            }
+        });
 
 
 
