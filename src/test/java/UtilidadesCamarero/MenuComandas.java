@@ -18,8 +18,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
 class MenuComandas extends JFrame {
@@ -64,7 +72,7 @@ class MenuComandas extends JFrame {
 
         JPanel panelTabla = new JPanel(new GridLayout(1,3));
         panelTabla.add(scrollPane);
-        panelTabla.setBorder(BorderFactory.createEmptyBorder(50,50,0,50));
+        panelTabla.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
 
         panelExterno.add(panelCombo);
         panelExterno.add(panelTabla);
@@ -106,6 +114,31 @@ class MenuComandas extends JFrame {
                         comboCantidad.getText(),Precio* Integer.parseInt(comboCantidad.getText()) });
 
 
+
+                Connection con = conectarConBD();
+
+                try{
+                    CallableStatement stmt = con.prepareCall("{ call procedure_comandas(?,?,?,?,?)}");
+
+                    stmt.setInt(1, listaMesas.get(comboMesa.getSelectedIndex()).getId());
+                    stmt.setInt(2,listaCamareros.get(comboCamarero.getSelectedIndex()).getId());
+                    stmt.setInt(3,Menu.get(comboProducto.getSelectedIndex()).getId());
+                    stmt.setInt(4, Integer.parseInt(comboCantidad.getText()));
+                    String codigo = listaCamareros.get(comboCamarero.getSelectedIndex()).getNombre().substring(0,1)+
+                            listaMesas.get(comboMesa.getSelectedIndex()).getId()+ LocalDate.now();
+                    stmt.setString(5,codigo);
+
+                    ResultSet rs = stmt.executeQuery();
+
+
+
+                }catch (Exception i){
+                    System.out.println(i);
+                }finally {
+                    cerrarConexion(con);
+                }
+
+
             }
         });
 
@@ -117,6 +150,30 @@ class MenuComandas extends JFrame {
                 model.setValueAt(comboProducto.getSelectedItem(), i, 0);
                 model.setValueAt(comboCantidad.getText(), i, 1);
                 model.setValueAt(Precio*Integer.parseInt(comboCantidad.getText()), i, 2);
+
+
+                Connection con = conectarConBD();
+
+                try{
+                    CallableStatement stmt = con.prepareCall("{ call procedure_comandas_update(?,?,?,?,?)}");
+
+                    stmt.setInt(1, listaMesas.get(comboMesa.getSelectedIndex()).getId());
+                    stmt.setInt(2,listaCamareros.get(comboCamarero.getSelectedIndex()).getId());
+                    stmt.setInt(3,Menu.get(comboProducto.getSelectedIndex()).getId());
+                    stmt.setInt(4, Integer.parseInt(comboCantidad.getText()));
+                    String codigo = listaCamareros.get(comboCamarero.getSelectedIndex()).getNombre().substring(0,1)+
+                            listaMesas.get(comboMesa.getSelectedIndex()).getId()+ LocalDate.now();
+                    stmt.setString(5,codigo);
+
+                    ResultSet rs = stmt.executeQuery();
+
+
+
+                }catch (Exception u){
+                    System.out.println(u);
+                }finally {
+                    cerrarConexion(con);
+                }
             }
 
         });
@@ -124,7 +181,7 @@ class MenuComandas extends JFrame {
 
 
 
-        System.out.println(comboProducto.getSelectedItem().toString());
+
 
         add(panelExterno);
 
