@@ -75,17 +75,7 @@ class VentanaComanda extends JFrame{
         add(img1);
 
 
-
-        List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
-
-        String data[][] = {};
-        String columnNames[] = {"Producto", "Cantidad",};
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable tabla1 = new JTable(model);
-
-
-
+        JTable tabla1 = consultaComandas();
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.add(tabla1);
@@ -98,16 +88,6 @@ class VentanaComanda extends JFrame{
         JButton botonRestar = new JButton("-");
         botonSumar.setSize(10,10);
         botonSumar.setVisible(true);
-
-
-
-
-        for (Consumicion c1 : comandas){
-
-            model.insertRow(0, new Object[]{c1.getId_producto(), c1.getCantidad_pedida()});
-
-
-        }
 
         int filaSeleccionada = tabla1.getSelectedRow();
 
@@ -130,24 +110,31 @@ class VentanaComanda extends JFrame{
         panelExterno.add(botonesFinales);
 
 
-        if (filaSeleccionada == 1){
-
-        }
-
 
 
         }
 
+    private JTable consultaComandas() {
+        List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
+
+        String data[][] = {};
+        String columnNames[] = {"Producto", "Cantidad",};
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        JTable tabla1 = new JTable(model);
 
 
+        for (Consumicion c1 : comandas){
+
+            model.insertRow(0, new Object[]{c1.getId_producto(), c1.getCantidad_pedida()});
 
 
-
-
-
-
-
+        }
+        return tabla1;
     }
+
+
+}
 
 
 
