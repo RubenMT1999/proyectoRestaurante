@@ -13,9 +13,18 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 public class UtilidadesCocinero {
     public static void main(String[] args) {
@@ -28,6 +37,9 @@ public class UtilidadesCocinero {
 
 
 class VentanaComanda extends JFrame{
+    private JTable tabla1 = new JTable() ;
+
+
     public VentanaComanda() {
 
 
@@ -75,7 +87,7 @@ class VentanaComanda extends JFrame{
         add(img1);
 
 
-        JTable tabla1 = consultaComandas();
+        consultaComandas(tabla1);
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.add(tabla1);
@@ -84,10 +96,67 @@ class VentanaComanda extends JFrame{
         JButton botonSumar = new JButton("+");
         botonSumar.setSize(10,10);
         botonSumar.setVisible(true);
+        botonSumar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            int row = tabla1.getSelectedRow();
+            String valorIds = tabla1.getModel().getValueAt(row,0).toString();
+            int valorId = Integer.parseInt(valorIds);
+
+            Connection con = conectarConBD();
+                try {
+                    PreparedStatement query = con.prepareStatement("call procedure_cocinero_sumar (?,1);");
+                    query.setInt(1,valorId);
+                    query.executeQuery();
+                    consultaComandas(tabla1);
+                    tabla1.repaint();
+
+
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+
+
+
+
+            }
+        });
 
         JButton botonRestar = new JButton("-");
-        botonSumar.setSize(10,10);
-        botonSumar.setVisible(true);
+        botonRestar.setSize(10,10);
+        botonRestar.setVisible(true);
+        botonRestar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = tabla1.getSelectedRow();
+                String valorIds = tabla1.getModel().getValueAt(row,0).toString();
+                int valorId = Integer.parseInt(valorIds);
+                Connection con = conectarConBD();
+                try {
+                    PreparedStatement query = con.prepareStatement("call procedure_cocinero_sumar (?,0);");
+                    query.setInt(1,valorId);
+                    query.executeQuery();
+                    consultaComandas(tabla1);
+                    tabla1.repaint();
+
+
+
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+
+            }
+        });
 
         int filaSeleccionada = tabla1.getSelectedRow();
 
@@ -114,19 +183,19 @@ class VentanaComanda extends JFrame{
 
         }
 
-    private JTable consultaComandas() {
+    private JTable consultaComandas(JTable tabla1) {
         List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
 
         String data[][] = {};
-        String columnNames[] = {"Producto", "Cantidad",};
+        String columnNames[] = {"Id","Producto", "Cantidad",};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable tabla1 = new JTable(model);
+        tabla1.setModel(model);
 
 
         for (Consumicion c1 : comandas){
 
-            model.insertRow(0, new Object[]{c1.getId_producto(), c1.getCantidad_pedida()});
+            model.insertRow(0, new Object[]{c1.getId(),c1.getId_producto(), c1.getCantidad_pedida()});
 
 
         }

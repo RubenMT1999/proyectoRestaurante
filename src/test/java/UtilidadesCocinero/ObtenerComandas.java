@@ -18,15 +18,18 @@ public class ObtenerComandas extends UtilidadesBBDD {
 
 
             try {
-                PreparedStatement query = con.prepareStatement("SELECT c2.nombre, c.cantidad_pedida  FROM consumicion c join carta c2 on c2.id = c.id_producto");
+                PreparedStatement query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida  FROM consumicion c join carta c2 on c2.id = c.id_producto");
                 ResultSet rs = query.executeQuery();
 
                 //Recorremos los datos
                 while (rs.next()) {
-                    Consumicion consumicion = new Consumicion(rs.getString("c2.nombre"),
+                    Consumicion consumicion = new Consumicion(
+                            rs.getInt("c.id"),
+                            rs.getString("c2.nombre"),
                             rs.getInt("c.cantidad_pedida"));
 
                     Menu.add(consumicion);
+
 
                 }
             } catch (SQLException sqle) {
@@ -40,5 +43,6 @@ public class ObtenerComandas extends UtilidadesBBDD {
 
             return Menu;
         }
+
 
     }
