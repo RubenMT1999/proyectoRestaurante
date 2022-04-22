@@ -6,6 +6,9 @@ package UtilidadesCocinero;
 
 
 import Modelos.Consumicion;
+import Modelos.Mesa;
+import UtilidadesBBDD.ObtenerMesas;
+import UtilidadesBBDD.numeroMesas;
 
 
 import javax.imageio.ImageIO;
@@ -52,19 +55,47 @@ class VentanaComanda extends JFrame{
 
         JLabel labelMesa = new JLabel("MESA");
 
+        List<Mesa> listaMesas = numeroMesas.obtenernumMesas();
+
         JComboBox numMesa = new JComboBox<String>();
-        numMesa.addItem("1");
-        numMesa.addItem("2");
-        numMesa.addItem("3");
-        numMesa.addItem("4");
-        numMesa.addItem("5");
-        numMesa.addItem("7");
-        numMesa.addItem("8");
-        numMesa.addItem("9");
-        numMesa.addItem("10");
+
+        for (Mesa m1 : listaMesas){
+            numMesa.addItem(m1.getNumeroMesa());
+
+        }
+
 
 
         JButton botonBuscar = new JButton("Buscar");
+        botonBuscar.setSize(10,10);
+        botonBuscar.setVisible(true);
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection con = conectarConBD();
+                try {
+                    PreparedStatement query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida  \n" +
+                            "FROM consumicion c \n" +
+                            "join carta c2 on c2.id = c.id_producto\n" +
+                            "join pedido p on p.codigo = c.codigo_pedido \n" +
+                            "join mesa m on m.id = p.id_mesa \n" +
+                            "where p.id_mesa  = ?;");
+                    query.setInt(1,(int)numMesa.getSelectedItem());
+                    ResultSet rs =query.executeQuery();
+
+
+
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+            }
+        });
+
 
 
         Font newFont = new Font("Monospaced",Font.BOLD,18);
