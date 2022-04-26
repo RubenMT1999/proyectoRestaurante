@@ -7,7 +7,9 @@ package UtilidadesCocinero;
 
 import Modelos.Consumicion;
 import Modelos.Mesa;
+import Modelos.Pedido;
 import UtilidadesBBDD.ObtenerMesas;
+import UtilidadesBBDD.ObtenerPedido;
 import UtilidadesBBDD.numeroMesas;
 
 
@@ -20,12 +22,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
@@ -56,7 +56,7 @@ class VentanaComanda extends JFrame{
 
         JLabel labelMesa = new JLabel("MESA");
 
-        List<Mesa> listaMesas = numeroMesas.obtenernumMesas();
+        List<Mesa> listaMesas = ObtenerMesas.obtenerMesas();
 
         JComboBox numMesa = new JComboBox<String>();
 
@@ -76,6 +76,7 @@ class VentanaComanda extends JFrame{
                 int num_mesa = (int) numMesa.getSelectedItem();
                 consultaComandas(tabla1,num_mesa);
                 tabla1.repaint();
+
 
             }
         });
@@ -175,18 +176,44 @@ class VentanaComanda extends JFrame{
             }
         });
 
+        JButton botonCuenta = new JButton("Cuenta Completada");
+        botonCuenta.setSize(10,10);
+        botonCuenta.setVisible(true);
+        botonCuenta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int num_mesa = (int) numMesa.getSelectedItem();
+                List<Pedido> listaPedidos = ObtenerPedido.obtenerPedidos();
+                List<Mesa> mesa1 = listaMesas.stream().filter(mesa -> mesa.getNumeroMesa() == num_mesa).collect(Collectors.toList());
+                List<Pedido> l1 = listaPedidos.stream().filter(m -> m.getId_mesa()== mesa1.get(0).getId()).filter(p->p.getPagado()==0).collect(Collectors.toList());
+
+                Connection con = conectarConBD();
+                try { CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
+
+                    stmt2.setString(1,l1.get(0).getCodigo());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }finally{
+                    cerrarConexion(con);
+                }
+
+            }
+        });
+
         int filaSeleccionada = tabla1.getSelectedRow();
 
         JPanel botonesFinales = new JPanel(new GridLayout(1,2));
 
         botonesFinales.add(botonSumar);
         botonesFinales.add(botonRestar);
+        botonesFinales.add(botonCuenta);
 
 
 
         JPanel panelTabla = new JPanel(new GridLayout(1,0));
 
         panelTabla.add(scrollPane);
+
 
 
 
