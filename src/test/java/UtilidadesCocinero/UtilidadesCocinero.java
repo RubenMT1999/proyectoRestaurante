@@ -188,9 +188,12 @@ class VentanaComanda extends JFrame{
                 List<Pedido> l1 = listaPedidos.stream().filter(m -> m.getId_mesa()== mesa1.get(0).getId()).filter(p->p.getPagado()==0).collect(Collectors.toList());
 
                 Connection con = conectarConBD();
-                try { CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
+                try {
+                    CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
 
                     stmt2.setString(1,l1.get(0).getCodigo());
+
+                    ResultSet rs = stmt2.executeQuery();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }finally{
@@ -258,7 +261,7 @@ class ImagenComandas extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\Desktop\\proyectoRestauranteApp\\imagenes\\fondo_productos.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
