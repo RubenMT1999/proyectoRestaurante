@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
@@ -72,27 +73,10 @@ class VentanaComanda extends JFrame{
         botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Connection con = conectarConBD();
-                try {
-                    PreparedStatement query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida  \n" +
-                            "FROM consumicion c \n" +
-                            "join carta c2 on c2.id = c.id_producto\n" +
-                            "join pedido p on p.codigo = c.codigo_pedido \n" +
-                            "join mesa m on m.id = p.id_mesa \n" +
-                            "where p.id_mesa  = ?;");
-                    query.setInt(1,(int)numMesa.getSelectedItem());
-                    ResultSet rs =query.executeQuery();
+                int num_mesa = (int) numMesa.getSelectedItem();
+                consultaComandas(tabla1,num_mesa);
+                tabla1.repaint();
 
-
-
-
-                } catch (SQLException sqle) {
-                    System.out.println("Error en la ejecución:"
-                            + sqle.getErrorCode() + " " + sqle.getMessage());
-
-                } finally {
-                    cerrarConexion(con);
-                }
             }
         });
 
@@ -118,7 +102,7 @@ class VentanaComanda extends JFrame{
         add(img1);
 
 
-        consultaComandas(tabla1);
+        //consultaComandas(tabla1,0);
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.add(tabla1);
@@ -139,7 +123,8 @@ class VentanaComanda extends JFrame{
                     PreparedStatement query = con.prepareStatement("call procedure_cocinero_sumar (?,1);");
                     query.setInt(1,valorId);
                     query.executeQuery();
-                    consultaComandas(tabla1);
+                    int num_mesa = (int) numMesa.getSelectedItem();
+                    consultaComandas(tabla1,num_mesa);
                     tabla1.repaint();
 
 
@@ -172,7 +157,8 @@ class VentanaComanda extends JFrame{
                     PreparedStatement query = con.prepareStatement("call procedure_cocinero_sumar (?,0);");
                     query.setInt(1,valorId);
                     query.executeQuery();
-                    consultaComandas(tabla1);
+                    int num_mesa = (int) numMesa.getSelectedItem();
+                    consultaComandas(tabla1,num_mesa);
                     tabla1.repaint();
 
 
@@ -214,8 +200,8 @@ class VentanaComanda extends JFrame{
 
         }
 
-    private JTable consultaComandas(JTable tabla1) {
-        List<Consumicion> comandas = ObtenerComandas.ObtenerComandas();
+    private JTable consultaComandas(JTable tabla1,int nummesa) {
+        List<Consumicion> comandas = ObtenerComandas.ObtenerComandas(nummesa);
 
         String data[][] = {};
         String columnNames[] = {"Id","Producto", "Cantidad",};
@@ -232,6 +218,7 @@ class VentanaComanda extends JFrame{
         }
         return tabla1;
     }
+
 
 
 }

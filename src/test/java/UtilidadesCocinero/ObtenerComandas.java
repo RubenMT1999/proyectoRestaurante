@@ -12,14 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObtenerComandas extends UtilidadesBBDD {
-    public static List<Consumicion> ObtenerComandas() {
+    public static List<Consumicion> ObtenerComandas(int nummesa) {
         List<Consumicion> Menu = new ArrayList<>();
 
         Connection con = conectarConBD();
 
 
         try {
-            PreparedStatement query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida  FROM consumicion c join carta c2 on c2.id = c.id_producto");
+            PreparedStatement query;
+            if( nummesa!= 0 ){
+                 query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida  \n" +
+                        "FROM consumicion c \n" +
+                        "join carta c2 on c2.id = c.id_producto\n" +
+                        "join pedido p on p.codigo = c.codigo_pedido \n" +
+                        "join mesa m on m.id = p.id_mesa \n" +
+                        "where p.id_mesa  = ?;");
+                query.setInt(1,nummesa);
+            }else{
+                query = con.prepareStatement("SELECT c.id, c2.nombre, c.cantidad_pedida " +
+                        " FROM consumicion c join carta c2 on c2.id = c.id_producto");
+            }
             ResultSet rs = query.executeQuery();
 
             //Recorremos los datos
@@ -44,6 +56,9 @@ public class ObtenerComandas extends UtilidadesBBDD {
 
         return Menu;
     }
+
+
+
 }
 
 
