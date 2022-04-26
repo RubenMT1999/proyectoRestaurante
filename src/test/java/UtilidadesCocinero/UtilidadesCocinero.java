@@ -187,16 +187,25 @@ class VentanaComanda extends JFrame{
                 List<Mesa> mesa1 = listaMesas.stream().filter(mesa -> mesa.getNumeroMesa() == num_mesa).collect(Collectors.toList());
                 List<Pedido> l1 = listaPedidos.stream().filter(m -> m.getId_mesa()== mesa1.get(0).getId()).filter(p->p.getPagado()==0).collect(Collectors.toList());
 
-                Connection con = conectarConBD();
-                try { CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
-
-                    stmt2.setString(1,l1.get(0).getCodigo());
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }finally{
-                    cerrarConexion(con);
+                if (tabla1.getRowCount() != 0 ) {
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Aún quedan productos, no puede poner la cuenta completada");
                 }
+                else {
 
+
+                    Connection con = conectarConBD();
+                    try {
+                        CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
+
+                        stmt2.setString(1, l1.get(0).getCodigo());
+                        stmt2.executeQuery();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                        cerrarConexion(con);
+                    }
+                }
             }
         });
 
