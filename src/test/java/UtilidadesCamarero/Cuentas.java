@@ -109,11 +109,7 @@ public class Cuentas extends JFrame{
                         int obtenerMesaInt = Character.getNumericValue(obtenerMesaStr);
 
 
-                       // List<Mesa> m1 = listaMesas.stream().filter(m-> m.getNumeroMesa() == obtenerMesaInt).collect(Collectors.toList());
 
-
-                       // List<Pedido> p1 = listaPedidos.stream().filter(p->p.getId_mesa() == m1.get(0).getId()).filter(p->p.getPagado() ==0)
-                         //       .collect(Collectors.toList());
 
 
                         stmt.setInt(1,obtenerMesaInt);
@@ -121,6 +117,19 @@ public class Cuentas extends JFrame{
 
                         ResultSet rs = stmt.executeQuery();
 
+
+                       /* CallableStatement stmt2 = con.prepareCall("{ call estado_pedido(?)}");
+
+                         List<Mesa> m1 = listaMesas.stream().filter(m-> m.getNumeroMesa() == obtenerMesaInt).collect(Collectors.toList());
+
+
+                         List<Pedido> p1 = listaPedidos.stream().filter(p->p.getId_mesa() == m1.get(0).getId()).filter(p->p.getPagado() ==0)
+                               .collect(Collectors.toList());
+
+
+                         stmt2.setString(1,p1.get(0).getCodigo());
+
+                         ResultSet rs2 = stmt2.executeQuery();*/
 
 
                     }catch (Exception z){
