@@ -54,10 +54,6 @@ class MenuComandas extends JFrame {
         JTable tabla1 = new JTable(model);
 
 
-
-
-
-
         JScrollPane scrollPane = new JScrollPane(tabla1);
         tabla1.setFillsViewportHeight(true);
 
@@ -99,7 +95,7 @@ class MenuComandas extends JFrame {
         }
 
         for (Mesa m : listaMesas){
-            if (m.getLibre()==0){
+            if (m.getLibre()==1){
                 comboMesa.addItem(m.getNumeroMesa());
             }
         }
