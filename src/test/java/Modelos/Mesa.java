@@ -17,6 +17,10 @@ public class Mesa {
     public Mesa() {
     }
 
+    public Mesa(int numeroMesa){
+        this.numeroMesa = numeroMesa;
+    }
+
 
     public Mesa(Mesa m){
         this.id = m.id;

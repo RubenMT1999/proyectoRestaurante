@@ -31,7 +31,8 @@ public class Consumicion {
         this.codigo_pedido = c1.getCodigo_pedido();
     }
 
-    public Consumicion(String id_producto, int cantidad_pedida) {
+    public Consumicion(int id, String id_producto, int cantidad_pedida) {
+        this.id = id;
         this.id_producto = id_producto;
         this.cantidad_pedida = cantidad_pedida;
     }
