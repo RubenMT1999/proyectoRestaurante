@@ -8,10 +8,19 @@ import UtilidadesBBDD.ObtenerPedido;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 public class Cuentas extends JFrame{
 
@@ -62,6 +71,7 @@ public class Cuentas extends JFrame{
         }
 
         JPanel panelBoton = new JPanel(new GridLayout(1,2,0,0));
+        panelBoton.setBorder(BorderFactory.createEmptyBorder(25,0,50,90));
         panelBoton.setSize(new Dimension(300,100));
         JButton boton1 = new JButton("Cuenta");
         JLabel labelVacio = new JLabel("");
@@ -72,6 +82,68 @@ public class Cuentas extends JFrame{
         panelTabla.add(scrollPane);
 
         JPanel panelExterno = new JPanel(new GridLayout(2,1,0,0));
+
+
+
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tabla1.getSelectedRow();
+                Object estado = model.getValueAt(i,1);
+
+                String estadoStr = String.valueOf(estado);
+                char letra = estadoStr.charAt(estadoStr.length()-1);
+                char si = 'Í';
+
+
+                if (letra == si){
+                    System.out.println("si");
+
+                    Connection con = conectarConBD();
+
+                    try{
+                        CallableStatement stmt = con.prepareCall("{ call procedure_cuenta(?)}");
+
+                        String obtenerMesa = String.valueOf(model.getValueAt(i,0));
+                        char obtenerMesaStr= obtenerMesa.charAt(obtenerMesa.length()-1);
+                        int obtenerMesaInt = Character.getNumericValue(obtenerMesaStr);
+
+
+
+
+
+                        stmt.setInt(1,obtenerMesaInt);
+
+
+                        ResultSet rs = stmt.executeQuery();
+
+
+                       /* CallableStatement stmt2 = con.prepareCall("{ call estado_pedido(?)}");
+
+                         List<Mesa> m1 = listaMesas.stream().filter(m-> m.getNumeroMesa() == obtenerMesaInt).collect(Collectors.toList());
+
+
+                         List<Pedido> p1 = listaPedidos.stream().filter(p->p.getId_mesa() == m1.get(0).getId()).filter(p->p.getPagado() ==0)
+                               .collect(Collectors.toList());
+
+
+                         stmt2.setString(1,p1.get(0).getCodigo());
+
+                         ResultSet rs2 = stmt2.executeQuery();*/
+
+
+                    }catch (Exception z){
+                        System.out.println(z);
+                    }finally {
+                        cerrarConexion(con);
+                    }
+
+
+
+                }else
+                    System.out.println("no");
+            }
+        });
 
 
         panelExterno.add(panelTabla);
