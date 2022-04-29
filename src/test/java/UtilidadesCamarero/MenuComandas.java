@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 class MenuComandas extends JFrame {
     public MenuComandas(){
 
-        JPanel panelExterno = new JPanel(new GridLayout(2,1,80,10));
+        JPanel panelExterno = new JPanel(new GridLayout(3,1,80,10));
         JPanel panelCombo = new JPanel(new GridLayout(3,3,80,10));
         panelCombo.setOpaque(false);
         panelCombo.setBorder(BorderFactory.createEmptyBorder(50,50,0,50));
@@ -46,6 +47,14 @@ class MenuComandas extends JFrame {
 
         JButton botonAniadir = new JButton("+");
         JButton botonActualizar = new JButton("Actualizar");
+        JButton botonObtener = new JButton("Obtener");
+
+        JPanel panelBotonObt = new JPanel(new GridLayout(1,2,80,10));
+        panelBotonObt.setBorder(BorderFactory.createEmptyBorder(90,20,50,50));
+        Label labelVacio1 = new Label("");
+
+        panelBotonObt.add(labelVacio1);
+        panelBotonObt.add(botonObtener);
 
         String data[][] = {};
         String col[] = {"Producto","Cantidad","Precio"};
@@ -66,12 +75,18 @@ class MenuComandas extends JFrame {
         panelCombo.add(botonActualizar);
 
 
-        JPanel panelTabla = new JPanel(new GridLayout(1,3));
+
+        JPanel panelTabla = new JPanel(new GridLayout(1,1,80,10));
+
+
+
         panelTabla.add(scrollPane);
+
         panelTabla.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
 
         panelExterno.add(panelCombo);
         panelExterno.add(panelTabla);
+        panelExterno.add(panelBotonObt);
 
 
         List<Carta> Menu = ObtenerProductos.obtenerProductos();
@@ -106,8 +121,29 @@ class MenuComandas extends JFrame {
 
                 Double Precio = Menu.get(comboProducto.getSelectedIndex()).getPrecio();
 
-                model.insertRow(0,new Object[]{comboProducto.getSelectedItem().toString(),
-                        comboCantidad.getText(),Precio* Integer.parseInt(comboCantidad.getText()) });
+
+                /* Vamos a impedir que se repitan los productos a la hora de añadir.
+                 obtenemos el numero de filas de la tabla */
+
+                int filas =model.getRowCount();
+                boolean existe = false;
+
+                //Recorremos todas las filas de la tabla obteniendo los valores.
+                for (int i =0; i<filas; i++){
+                    String valor =model.getValueAt(i,0).toString();
+                    /* Si el valor es igual al producto seleccionado del combobox, ya existe el producto dentro
+                    de la tabla. */
+                    if (valor.equals(comboProducto.getSelectedItem().toString())){
+                        existe = true;
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya has insertado este producto");
+                    }
+                }
+
+                //Si no existe añadimos el producto a la tabla y realizamos la conexion con la bbdd.
+                if (existe == false){
+                    model.insertRow(0,new Object[]{comboProducto.getSelectedItem().toString(),
+                            comboCantidad.getText(),Precio* Integer.parseInt(comboCantidad.getText()) });
 
 
 
@@ -133,8 +169,7 @@ class MenuComandas extends JFrame {
                 }finally {
                     cerrarConexion(con);
                 }
-
-
+                }
             }
         });
 
@@ -172,6 +207,41 @@ class MenuComandas extends JFrame {
                 }
             }
 
+        });
+
+
+        botonObtener.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numeroMesa = (int) comboMesa.getSelectedItem();
+
+                model.setRowCount(0);
+
+                Connection con = conectarConBD();
+
+                try{
+                    PreparedStatement stmt = con.prepareStatement("select c2.nombre,c.cantidad_pedida,c.precio" +
+                            " from consumicion c join pedido p on p.codigo = c.codigo_pedido \n" +
+                            "\tjoin carta c2 on c.id_producto =c2.id where p.id_mesa ="+ numeroMesa);
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    int contador = 0;
+                    while (rs.next()){
+                        model.insertRow(contador,new Object[]{rs.getString("nombre"),
+                                rs.getInt("cantidad_pedida"),
+                                rs.getDouble("precio") });
+
+                        contador++;
+                    }
+
+                }catch (Exception i){
+                    System.out.println(i);
+                }finally {
+                    cerrarConexion(con);
+                }
+
+            }
         });
 
 

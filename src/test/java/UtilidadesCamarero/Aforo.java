@@ -3,18 +3,11 @@ package UtilidadesCamarero;
 import Modelos.Mesa;
 import UtilidadesBBDD.ObtenerMesas;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

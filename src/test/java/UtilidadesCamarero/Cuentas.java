@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +24,7 @@ public class Cuentas extends JFrame{
 
     public Cuentas(){
         JPanel panelTabla = new JPanel(new GridLayout(1,2,0,0));
+        panelTabla.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         String data[][] = {};
         String col[] = {"Numero Mesa","Pedido Finalizado"};
 
@@ -59,19 +58,18 @@ public class Cuentas extends JFrame{
                 }else
                     estado = "SÍ";
 
-                model.insertRow(contador,new Object[]{"                     "+m.getNumeroMesa(),"                       "+
-                        estado});
+                model.insertRow(contador,new Object[]{"                                   "+m.getNumeroMesa(),"                                  "+
+                  estado});
                 contador++;
             }else {
-                model.insertRow(contador,new Object[]{"                     "+m.getNumeroMesa(),"                       "+
-                       "NO" });
+                model.insertRow(contador,new Object[]{"                                   "+m.getNumeroMesa(),"                                 "+
+                       " NO" });
                 contador++;
             }
-
         }
 
         JPanel panelBoton = new JPanel(new GridLayout(1,2,0,0));
-        panelBoton.setBorder(BorderFactory.createEmptyBorder(25,0,50,90));
+        panelBoton.setBorder(BorderFactory.createEmptyBorder(25,0,50,150));
         panelBoton.setSize(new Dimension(300,100));
         JButton boton1 = new JButton("Cuenta");
         JLabel labelVacio = new JLabel("");
@@ -97,7 +95,7 @@ public class Cuentas extends JFrame{
 
 
                 if (letra == si){
-                    System.out.println("si");
+
 
                     Connection con = conectarConBD();
 
@@ -108,40 +106,21 @@ public class Cuentas extends JFrame{
                         char obtenerMesaStr= obtenerMesa.charAt(obtenerMesa.length()-1);
                         int obtenerMesaInt = Character.getNumericValue(obtenerMesaStr);
 
-
-
-
-
                         stmt.setInt(1,obtenerMesaInt);
-
 
                         ResultSet rs = stmt.executeQuery();
 
-
-                       /* CallableStatement stmt2 = con.prepareCall("{ call estado_pedido(?)}");
-
-                         List<Mesa> m1 = listaMesas.stream().filter(m-> m.getNumeroMesa() == obtenerMesaInt).collect(Collectors.toList());
-
-
-                         List<Pedido> p1 = listaPedidos.stream().filter(p->p.getId_mesa() == m1.get(0).getId()).filter(p->p.getPagado() ==0)
-                               .collect(Collectors.toList());
-
-
-                         stmt2.setString(1,p1.get(0).getCodigo());
-
-                         ResultSet rs2 = stmt2.executeQuery();*/
-
-
                     }catch (Exception z){
                         System.out.println(z);
+
                     }finally {
                         cerrarConexion(con);
                     }
 
-
-
                 }else
-                    System.out.println("no");
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Esta mesa no ha finalizado");
+
             }
         });
 
@@ -151,7 +130,7 @@ public class Cuentas extends JFrame{
 
         add(panelExterno);
 
-        setBounds(600,300,300,300);
+        setBounds(600,300,500,400);
 
     }
 
