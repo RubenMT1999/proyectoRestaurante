@@ -15,7 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
@@ -131,12 +134,30 @@ class VenFormEmpleado extends JFrame {
         botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 Connection con = conectarConBD();
-                Empleado em1 = new Empleado();
+                Empleado empleado = null;
+
 
                 try {
-                    PreparedStatement query = con.prepareStatement("select * from empleado where id  = ? ;");
+                    PreparedStatement query = con.prepareStatement("select * from empleado where id  = ? ");
                     query.setInt(1, Integer.parseInt(textId.getText()));
+                    ResultSet rs = query.executeQuery();
+
+                    while (rs.next()){
+                        empleado = new Empleado(
+                             rs.getInt("id")
+                            ,rs.getString("nombre")
+                            ,rs.getString("codigo")
+                            ,rs.getString("tipoEmpleado")
+                            ,rs.getString("apellido1")
+                            ,rs.getString("apellido2")
+                            ,rs.getString("dni") );
+
+                    }
+
+
 
                 }catch (SQLException sqle) {
                     System.out.println("Error en la ejecución:"

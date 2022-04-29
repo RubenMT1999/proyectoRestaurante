@@ -23,7 +23,7 @@ public class Empleado {
         this.dni = dni;
     }
 
-    public Empleado() {
+    public Empleado(int id, String nombre, String codigo, String tipoEmpleado, String apellido1, String apellido2, String dni) {
     }
 
     public Empleado(Empleado e){

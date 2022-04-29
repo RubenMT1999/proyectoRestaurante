@@ -14,7 +14,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 public class ObtenerPedido {
 
-    public static List<Pedido> obtenerPedidos(){
+    public static List<Pedido>obtenerPedidos(){
 
         List<Pedido> listaPedidos = new ArrayList<>();
 
