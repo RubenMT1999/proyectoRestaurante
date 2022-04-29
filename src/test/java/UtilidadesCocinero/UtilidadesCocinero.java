@@ -34,7 +34,7 @@ public class UtilidadesCocinero {
     public static void main(String[] args) {
     VentanaComanda v1 = new VentanaComanda();
         v1.setVisible(true);
-        v1.setSize(new Dimension(510, 870));
+        v1.setSize(new Dimension(1200, 800));
     }
 }
     
@@ -42,15 +42,26 @@ public class UtilidadesCocinero {
 
 class VentanaComanda extends JFrame{
     private JTable tabla1 = new JTable() ;
+    private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
+
+
 
 
     public VentanaComanda() {
 
 
 
-        JPanel panelExterno = new JPanel(new GridLayout(2,1,10,10));
+        JPanel panelExterno = crearPanelImagenFondo(new GridLayout(2,1,10,10));
+        setContentPane(panelExterno);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);
+        setResizable(false);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
+
 
 
 
@@ -98,9 +109,6 @@ class VentanaComanda extends JFrame{
 
 
 
-        ImagenComandas img1 = new ImagenComandas();
-        img1.add(panelExterno);
-        add(img1);
 
 
         //consultaComandas(tabla1,0);
@@ -221,14 +229,14 @@ class VentanaComanda extends JFrame{
 
         JPanel panelTabla = new JPanel(new GridLayout(1,0));
 
-        panelTabla.add(scrollPane);
+        panelTabla.add(tabla1);
 
 
 
 
         panelExterno.add(labelMesa);
         panelExterno.add(panelLabel1);
-        panelExterno.add(tabla1);
+        panelExterno.add(panelTabla);
         panelExterno.add(botonesFinales);
 
 
@@ -255,29 +263,28 @@ class VentanaComanda extends JFrame{
         return tabla1;
     }
 
+    private JPanel crearPanelImagenFondo(GridLayout gridLayout) {
+        JPanel panel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoPantalla.getImage(), 0, 0, null);
 
 
-}
+            }
+        };
+        return panel;
+    }
 
-
-
-class ImagenComandas extends JPanel{
-
-    private Image imagen;
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
-        try{
-            imagen= ImageIO.read(miImagen);
-        }catch (IOException e){
-            System.out.println("La imagen no se encuentra");
-        }
-        Image imagenResultado = imagen.getScaledInstance(500,800,Image.SCALE_DEFAULT);
-        g.drawImage(imagenResultado,0,0,null);
+    private static  String getRutaImagenFondo(){
+        String ruta = new File("").getAbsolutePath();
+        return ruta + "\\imagenes\\fondo_cocinero_2.jpg";
     }
 
 }
+
+
+
+
 
 
 
