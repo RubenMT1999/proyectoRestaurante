@@ -100,11 +100,11 @@ class VentanaAdmin extends JFrame {
 
 
 
-        setBounds(500,50,600,900);
+        setBounds(500,50,400,500);
 
 
         setVisible(true);
-        setSize(500,840);
+
 
     }
     private JPanel crearPanelImagenFondo() {
