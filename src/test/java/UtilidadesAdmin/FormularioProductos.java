@@ -1,13 +1,24 @@
 package UtilidadesAdmin;
 
+import Modelos.Categoria;
+import Modelos.Mesa;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
 public class FormularioProductos{
@@ -32,9 +43,18 @@ class VenFormProducto extends JFrame {
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
 
         JLabel labelId = new JLabel("ID:");
-        JLabel labelCodigo = new JLabel("Código:");
+        JLabel labelCodigo = new JLabel("Nombre:");
         JLabel labelDescripcion = new JLabel("Descripción:");
         JLabel labelPrecio = new JLabel("Precio:");
+        JLabel labelCategoria = new JLabel("Categoría:");
+        JComboBox combo1 = new JComboBox<>();
+        combo1.addItem(Categoria.bebida);
+        combo1.addItem(Categoria.entrante);
+        combo1.addItem(Categoria.postre);
+        combo1.addItem(Categoria.carne);
+        combo1.addItem(Categoria.pescado);
+        combo1.addItem(Categoria.pasta);
+        combo1.addItem(Categoria.vegetariano);
 
 
         JButton botonCrear = new JButton("Crear");
@@ -45,13 +65,14 @@ class VenFormProducto extends JFrame {
 
 
 
+
         JTextField textId = new JTextField();
-        JTextField textCodigo = new JTextField();
+        JTextField textNombre = new JTextField();
         JTextField textDescripcion= new JTextField();
         JTextField textPrecio = new JTextField();
 
         textId.setBorder(BorderFactory.createCompoundBorder());
-        textCodigo.setBorder(BorderFactory.createCompoundBorder());
+        textNombre.setBorder(BorderFactory.createCompoundBorder());
         textDescripcion.setBorder(BorderFactory.createCompoundBorder());
         textPrecio.setBorder(BorderFactory.createCompoundBorder());
 
@@ -59,7 +80,7 @@ class VenFormProducto extends JFrame {
 
         Font newFont = new Font("Monospaced",Font.BOLD,18);
         textId.setFont(newFont);
-        textCodigo.setFont(newFont);
+        textNombre.setFont(newFont);
         textDescripcion.setFont(newFont);
         textPrecio.setFont(newFont);
 
@@ -68,19 +89,23 @@ class VenFormProducto extends JFrame {
         labelCodigo.setFont(newFont);
         labelDescripcion.setFont(newFont);
         labelPrecio.setFont(newFont);
+        labelCategoria.setFont(newFont);
 
 
         panelExterno.add(labelId);
         panelExterno.add(textId);
 
         panelExterno.add(labelCodigo);
-        panelExterno.add(textCodigo);
+        panelExterno.add(textNombre);
 
         panelExterno.add(labelDescripcion);
         panelExterno.add(textDescripcion);
 
         panelExterno.add(labelPrecio);
         panelExterno.add(textPrecio);
+
+        panelExterno.add(labelCategoria);
+        panelExterno.add(combo1);
 
         panelExterno.add(Box.createRigidArea(new Dimension(60,0)));
 
@@ -95,6 +120,34 @@ class VenFormProducto extends JFrame {
 
 
         panelExterno.add(panelBotones);
+
+
+        botonCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Connection con = conectarConBD();
+
+                try{
+                    PreparedStatement query = con.prepareStatement("insert into carta (nombre,descripcion," +
+                            "categoria,precio) values(?,?,?,?)");
+
+                    query.setString(1,textNombre.getText());
+                    query.setString(2,textDescripcion.getText());
+                    query.setInt(3,combo1.getSelectedIndex());
+                    query.setDouble(4,Double.parseDouble(textPrecio.getText()));
+
+                    ResultSet rs = query.executeQuery();
+
+                }catch (Exception o){
+                    System.out.println(o);
+                }finally {
+                    cerrarConexion(con);
+                }
+            }
+        });
+
+
 
 
 
@@ -114,7 +167,8 @@ class ImagenFormProducto extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta + "\\imagenes\\fondo_productos.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
