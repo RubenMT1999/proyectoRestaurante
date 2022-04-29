@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,7 +66,6 @@ public class Cuentas extends JFrame{
                        " NO" });
                 contador++;
             }
-
         }
 
         JPanel panelBoton = new JPanel(new GridLayout(1,2,0,0));
@@ -98,7 +95,7 @@ public class Cuentas extends JFrame{
 
 
                 if (letra == si){
-                    System.out.println("si");
+
 
                     Connection con = conectarConBD();
 
@@ -109,15 +106,9 @@ public class Cuentas extends JFrame{
                         char obtenerMesaStr= obtenerMesa.charAt(obtenerMesa.length()-1);
                         int obtenerMesaInt = Character.getNumericValue(obtenerMesaStr);
 
-
                         stmt.setInt(1,obtenerMesaInt);
 
-
                         ResultSet rs = stmt.executeQuery();
-
-
-
-
 
                     }catch (Exception z){
                         System.out.println(z);
@@ -130,11 +121,7 @@ public class Cuentas extends JFrame{
                     JOptionPane.showMessageDialog(panelExterno,
                             "Esta mesa no ha finalizado");
 
-
-
-
             }
-
         });
 
 
