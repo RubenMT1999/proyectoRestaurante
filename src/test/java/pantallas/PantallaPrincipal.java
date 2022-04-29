@@ -65,48 +65,44 @@ class PrimeraVentana extends JFrame {
                     new VentanaCamarero();
                 }
             });
-        } catch (Exception ex) {
-            System.out.println("No se pudo cargar la imagen");
-        }
-        try {
+
             Image imagenCliente = ImageIO.read(cliente);
-            Image imagenResultado = imagenCliente.getScaledInstance(175,175,Image.SCALE_SMOOTH);
-            boton2.setIcon(new ImageIcon(imagenResultado));
+            Image imagenResultado2 = imagenCliente.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton2.setIcon(new ImageIcon(imagenResultado2));
             boton2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   new VentanaCliente();
+                    new VentanaCliente();
                 }
             });
-        } catch (Exception ex) {
-            System.out.println("No se pudo cargar la imagen");
-        }
-        try {
+
+
             Image imagenAdmin = ImageIO.read(admin);
-            Image imagenResultado = imagenAdmin.getScaledInstance(175,175,Image.SCALE_SMOOTH);
-            boton3.setIcon(new ImageIcon(imagenResultado));
+            Image imagenResultado3 = imagenAdmin.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton3.setIcon(new ImageIcon(imagenResultado3));
             boton3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     new VentanaAdmin();
                 }
             });
-        } catch (Exception ex) {
-            System.out.println("No se pudo cargar la imagen");
-        }
-        try {
+
+
             Image imagenChef = ImageIO.read(chef);
-            Image imagenResultado = imagenChef.getScaledInstance(175,175,Image.SCALE_SMOOTH);
-            boton4.setIcon(new ImageIcon(imagenResultado));
+            Image imagenResultado4 = imagenChef.getScaledInstance(175,175,Image.SCALE_SMOOTH);
+            boton4.setIcon(new ImageIcon(imagenResultado4));
             boton4.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   new VentanaCocinero();
+                    new VentanaCocinero();
                 }
             });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
+
+
+
 
         panelExterno.add(boton1);
         panelExterno.add(boton2);
