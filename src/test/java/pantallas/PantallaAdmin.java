@@ -34,11 +34,8 @@ class VentanaAdmin extends JFrame {
 
         setContentPane(panelExterno);
         setLocationRelativeTo(null);
-        setVisible(true);
-        setSize(new Dimension(400,400));
-        setResizable(false);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setExtendedState(MAXIMIZED_BOTH);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
@@ -100,11 +97,14 @@ class VentanaAdmin extends JFrame {
 
 
 
-        setBounds(500,50,600,900);
+        setBounds(500,50,400,500);
 
 
+        setSize(new Dimension(400,500));
+        pack();
+        setLocationRelativeTo(null);
         setVisible(true);
-        setSize(500,840);
+
 
     }
     private JPanel crearPanelImagenFondo() {

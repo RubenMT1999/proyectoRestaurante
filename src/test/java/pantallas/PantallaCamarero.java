@@ -36,7 +36,6 @@ class VentanaCamarero extends JFrame {
         setSize(new Dimension(500,900));
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
