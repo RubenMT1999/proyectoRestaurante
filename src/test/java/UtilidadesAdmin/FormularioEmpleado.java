@@ -1,13 +1,24 @@
 package UtilidadesAdmin;
 
+import Modelos.Empleado;
+import Modelos.tipoEmpleado;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
 public class FormularioEmpleado{
@@ -40,15 +51,22 @@ class VenFormEmpleado extends JFrame {
         JLabel labelApellido1 = new JLabel("Primer Apellido:");
         JLabel labelApellido2 = new JLabel("Segundo Apellido:");
         JLabel labelTipo = new JLabel("Tipo Empleado");
+        JLabel labelDni = new JLabel("DNI");
 
         JComboBox comboTipo = new JComboBox<String>();
         comboTipo.addItem("camarero");
         comboTipo.addItem("cocinero");
         comboTipo.addItem("admin");
 
-        JButton botonBuscar = new JButton("Buscar");
-        JButton botonGuardar = new JButton("Guardar");
+
+
+
+
+
+
+
         JButton botonEliminar = new JButton("Eliminar");
+
 
 
 
@@ -58,12 +76,14 @@ class VenFormEmpleado extends JFrame {
         JTextField textCodigo = new JTextField();
         JTextField textApellido1 = new JTextField();
         JTextField textApellido2 = new JTextField();
+        JTextField textDni = new JTextField();
 
         textId.setBorder(BorderFactory.createCompoundBorder());
         textNombre.setBorder(BorderFactory.createCompoundBorder());
         textCodigo.setBorder(BorderFactory.createCompoundBorder());
         textApellido1.setBorder(BorderFactory.createCompoundBorder());
         textApellido2.setBorder(BorderFactory.createCompoundBorder());
+        textDni.setBorder(BorderFactory.createCompoundBorder());
 
         textId.setForeground(Color.RED);
 
@@ -73,6 +93,7 @@ class VenFormEmpleado extends JFrame {
         textCodigo.setFont(newFont);
         textApellido1.setFont(newFont);
         textApellido2.setFont(newFont);
+        textDni.setFont(newFont);
 
 
         labelId.setFont(newFont);
@@ -81,6 +102,7 @@ class VenFormEmpleado extends JFrame {
         labelApellido1.setFont(newFont);
         labelApellido2.setFont(newFont);
         labelTipo.setFont(newFont);
+        labelDni.setFont(newFont);
 
         panelExterno.add(labelId);
         panelExterno.add(textId);
@@ -100,7 +122,70 @@ class VenFormEmpleado extends JFrame {
         panelExterno.add(labelApellido2);
         panelExterno.add(textApellido2);
 
+        panelExterno.add(labelDni);
+        panelExterno.add(textDni);
+
         panelExterno.add(Box.createRigidArea(new Dimension(60,0)));
+
+        JButton botonBuscar = new JButton("Buscar");
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection con = conectarConBD();
+                Empleado em1 = new Empleado();
+
+                try {
+                    PreparedStatement query = con.prepareStatement("select * from empleado where id  = ? ;");
+                    query.setInt(1, Integer.parseInt(textId.getText()));
+
+                }catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+
+            }
+        });
+
+        JButton botonGuardar = new JButton("Guardar");
+        botonGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                Connection con = conectarConBD();
+                try {
+
+
+
+
+                    PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
+                    query.setString(1, textCodigo.getText());
+                    query.setInt(2,comboTipo.getSelectedIndex());
+                    query.setString(3, textNombre.getText());
+                    query.setString(4, textApellido1.getText());
+                    query.setString(5, textApellido2.getText());
+                    query.setString(6, textDni.getText());
+
+
+
+                    query.executeQuery();
+
+
+
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+            }
+        });
+
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
 

@@ -34,7 +34,7 @@ public class UtilidadesCocinero {
     public static void main(String[] args) {
     VentanaComanda v1 = new VentanaComanda();
         v1.setVisible(true);
-        v1.setSize(new Dimension(1200, 800));
+        v1.setSize(new Dimension(800, 600));
     }
 }
     
@@ -51,7 +51,7 @@ class VentanaComanda extends JFrame{
 
 
 
-        JPanel panelExterno = crearPanelImagenFondo(new GridLayout(2,1,10,10));
+        JPanel panelExterno = crearPanelImagenFondo(null);
         setContentPane(panelExterno);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -60,7 +60,7 @@ class VentanaComanda extends JFrame{
         setVisible(true);
         setResizable(false);
         panelExterno.setOpaque(false);
-        panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
+        panelExterno.setBorder(BorderFactory.createEmptyBorder(170,170,170,170));
 
 
 
@@ -105,13 +105,14 @@ class VentanaComanda extends JFrame{
 
         JPanel panelLabel1 = new JPanel(new GridLayout(1,1,10,10));
         panelLabel1.add(numMesa);
+
         panelLabel1.add(botonBuscar);
 
 
 
 
 
-        //consultaComandas(tabla1,0);
+
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.add(tabla1);
@@ -227,7 +228,7 @@ class VentanaComanda extends JFrame{
 
 
 
-        JPanel panelTabla = new JPanel(new GridLayout(1,0));
+        JPanel panelTabla = new JPanel(new GridLayout(1,1));
 
         panelTabla.add(tabla1);
 
@@ -236,7 +237,9 @@ class VentanaComanda extends JFrame{
 
         panelExterno.add(labelMesa);
         panelExterno.add(panelLabel1);
+        panelExterno.add(new JLabel("", SwingConstants.CENTER));
         panelExterno.add(panelTabla);
+        panelExterno.add(new JLabel("", SwingConstants.CENTER));
         panelExterno.add(botonesFinales);
 
 
@@ -264,14 +267,22 @@ class VentanaComanda extends JFrame{
     }
 
     private JPanel crearPanelImagenFondo(GridLayout gridLayout) {
-        JPanel panel = new JPanel() {
-            public void paintComponent(Graphics g) {
+        JPanel panel = null;
+        if (gridLayout == null){
+            panel = new JPanel(){  public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(fondoPantalla.getImage(), 0, 0, null);
 
 
-            }
-        };
+            }};
+        }else{
+            panel = new JPanel(gridLayout){  public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoPantalla.getImage(), 0, 0, null);
+
+
+            }};
+        }
         return panel;
     }
 

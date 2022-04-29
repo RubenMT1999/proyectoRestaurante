@@ -14,6 +14,8 @@ public class PantallaAdmin{
 
     public static void main(String[] args) {
         VentanaAdmin venAd = new VentanaAdmin();
+        venAd.setVisible(true);
+        venAd.setSize(new Dimension(400, 500));
 
     }
 
@@ -33,7 +35,7 @@ class VentanaAdmin extends JFrame {
         setContentPane(panelExterno);
         setLocationRelativeTo(null);
         setVisible(true);
-        setSize(new Dimension(1200,800));
+        setSize(new Dimension(400,400));
         setResizable(false);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
