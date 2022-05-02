@@ -135,9 +135,9 @@ class VenFormEmpleado extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-                Connection con = conectarConBD();
                 Empleado empleado = null;
+                Connection con = conectarConBD();
+
 
 
                 try {
@@ -150,10 +150,11 @@ class VenFormEmpleado extends JFrame {
                              rs.getInt("id")
                             ,rs.getString("nombre")
                             ,rs.getString("codigo")
-                            ,rs.getString("tipoEmpleado")
+                            ,tipoEmpleado.valueOf(rs.getString("tipo"))
                             ,rs.getString("apellido1")
                             ,rs.getString("apellido2")
                             ,rs.getString("dni") );
+
 
                     }
 
@@ -166,6 +167,28 @@ class VenFormEmpleado extends JFrame {
                 } finally {
                     cerrarConexion(con);
                 }
+                if (empleado == null ) {
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "No existe ningun empleado con esa ID");
+                }
+                else
+
+                textNombre.setText(empleado.getNombre());
+                textCodigo.setText(empleado.getCodigo());
+                if (empleado.getTipoEmpleado() == tipoEmpleado.camarero){
+                    comboTipo.setSelectedIndex(0);
+                }
+                if (empleado.getTipoEmpleado() == tipoEmpleado.cocinero){
+                    comboTipo.setSelectedIndex(1);
+                }
+                if (empleado.getTipoEmpleado() == tipoEmpleado.admin){
+                    comboTipo.setSelectedIndex(2);
+                }
+                textApellido1.setText(empleado.getApellido1());
+                textApellido2.setText(empleado.getApellido2());
+                textDni.setText(empleado.getDni());
+
+
 
             }
         });
@@ -184,7 +207,7 @@ class VenFormEmpleado extends JFrame {
 
                     PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
                     query.setString(1, textCodigo.getText());
-                    query.setInt(2,comboTipo.getSelectedIndex());
+                    query.setInt(2, comboTipo.getSelectedIndex() + 1) ;
                     query.setString(3, textNombre.getText());
                     query.setString(4, textApellido1.getText());
                     query.setString(5, textApellido2.getText());
@@ -237,7 +260,7 @@ class ImagenFormEmpleado extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

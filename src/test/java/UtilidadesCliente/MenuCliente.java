@@ -238,7 +238,7 @@ public class MenuCliente {
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\carta_menu.jpg");
+            File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\carta_menu.jpg");
             try {
                 imagen = ImageIO.read(miImagen);
             } catch (IOException e) {
