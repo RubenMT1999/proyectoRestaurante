@@ -68,7 +68,7 @@ class VenFormEmpleado extends JFrame {
 
 
 
-        JButton botonEliminar = new JButton("Eliminar");
+
 
 
 
@@ -168,6 +168,12 @@ class VenFormEmpleado extends JFrame {
                     cerrarConexion(con);
                 }
                 if (empleado == null ) {
+                    textId.setText("");
+                    textNombre.setText("");
+                    textCodigo.setText("");
+                    textApellido1.setText("");
+                    textApellido2.setText("");
+                    textDni.setText("");
                     JOptionPane.showMessageDialog(panelExterno,
                             "No existe ningun empleado con esa ID");
                 }
@@ -205,13 +211,14 @@ class VenFormEmpleado extends JFrame {
 
 
 
-                    PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
-                    query.setString(1, textCodigo.getText());
-                    query.setInt(2, comboTipo.getSelectedIndex() + 1) ;
-                    query.setString(3, textNombre.getText());
-                    query.setString(4, textApellido1.getText());
-                    query.setString(5, textApellido2.getText());
-                    query.setString(6, textDni.getText());
+                    PreparedStatement query = con.prepareStatement("insert into empleado (id, codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?,?);");
+                    query.setInt(1,Integer.parseInt(textId.getText()));
+                    query.setString(2, textCodigo.getText());
+                    query.setInt(3, comboTipo.getSelectedIndex() + 1) ;
+                    query.setString(4, textNombre.getText());
+                    query.setString(5, textApellido1.getText());
+                    query.setString(6, textApellido2.getText());
+                    query.setString(7, textDni.getText());
 
 
 
@@ -229,6 +236,35 @@ class VenFormEmpleado extends JFrame {
                 }
             }
         });
+
+        JButton botonEliminar = new JButton("Eliminar");
+        botonEliminar.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                Connection con = conectarConBD();
+
+
+                                                try {
+                                                    PreparedStatement query = con.prepareStatement("delete from empleado where id = ?");
+                                                    query.setInt(1, Integer.parseInt(textId.getText()));
+                                                    ResultSet rs = query.executeQuery();
+
+                                                } catch (SQLException sqle) {
+                                                    System.out.println("Error en la ejecución:"
+                                                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                                                } finally {
+                                                    cerrarConexion(con);
+                                                }
+                                                textId.setText("");
+                                                textNombre.setText("");
+                                                textCodigo.setText("");
+                                                textApellido1.setText("");
+                                                textApellido2.setText("");
+                                                textDni.setText("");
+                                            }
+                                        });
+
 
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
