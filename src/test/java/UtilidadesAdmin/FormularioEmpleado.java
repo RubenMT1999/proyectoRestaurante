@@ -234,6 +234,12 @@ class VenFormEmpleado extends JFrame {
                 } finally {
                     cerrarConexion(con);
                 }
+                textId.setText("");
+                textNombre.setText("");
+                textCodigo.setText("");
+                textApellido1.setText("");
+                textApellido2.setText("");
+                textDni.setText("");
             }
         });
 
