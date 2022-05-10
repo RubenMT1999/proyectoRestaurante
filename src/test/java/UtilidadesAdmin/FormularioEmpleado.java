@@ -15,7 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
@@ -65,7 +68,7 @@ class VenFormEmpleado extends JFrame {
 
 
 
-        JButton botonEliminar = new JButton("Eliminar");
+
 
 
 
@@ -131,12 +134,31 @@ class VenFormEmpleado extends JFrame {
         botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                Empleado empleado = null;
                 Connection con = conectarConBD();
-                Empleado em1 = new Empleado();
+
+
 
                 try {
-                    PreparedStatement query = con.prepareStatement("select * from empleado where id  = ? ;");
+                    PreparedStatement query = con.prepareStatement("select * from empleado where id  = ? ");
                     query.setInt(1, Integer.parseInt(textId.getText()));
+                    ResultSet rs = query.executeQuery();
+
+                    while (rs.next()){
+                        empleado = new Empleado(
+                             rs.getInt("id")
+                            ,rs.getString("nombre")
+                            ,rs.getString("codigo")
+                            ,tipoEmpleado.valueOf(rs.getString("tipo"))
+                            ,rs.getString("apellido1")
+                            ,rs.getString("apellido2")
+                            ,rs.getString("dni") );
+
+
+                    }
+
+
 
                 }catch (SQLException sqle) {
                     System.out.println("Error en la ejecución:"
@@ -145,6 +167,34 @@ class VenFormEmpleado extends JFrame {
                 } finally {
                     cerrarConexion(con);
                 }
+                if (empleado == null ) {
+                    textId.setText("");
+                    textNombre.setText("");
+                    textCodigo.setText("");
+                    textApellido1.setText("");
+                    textApellido2.setText("");
+                    textDni.setText("");
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "No existe ningun empleado con esa ID");
+                }
+                else
+
+                textNombre.setText(empleado.getNombre());
+                textCodigo.setText(empleado.getCodigo());
+                if (empleado.getTipoEmpleado() == tipoEmpleado.camarero){
+                    comboTipo.setSelectedIndex(0);
+                }
+                if (empleado.getTipoEmpleado() == tipoEmpleado.cocinero){
+                    comboTipo.setSelectedIndex(1);
+                }
+                if (empleado.getTipoEmpleado() == tipoEmpleado.admin){
+                    comboTipo.setSelectedIndex(2);
+                }
+                textApellido1.setText(empleado.getApellido1());
+                textApellido2.setText(empleado.getApellido2());
+                textDni.setText(empleado.getDni());
+
+
 
             }
         });
@@ -161,13 +211,14 @@ class VenFormEmpleado extends JFrame {
 
 
 
-                    PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
-                    query.setString(1, textCodigo.getText());
-                    query.setInt(2,comboTipo.getSelectedIndex());
-                    query.setString(3, textNombre.getText());
-                    query.setString(4, textApellido1.getText());
-                    query.setString(5, textApellido2.getText());
-                    query.setString(6, textDni.getText());
+                    PreparedStatement query = con.prepareStatement("insert into empleado (id, codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?,?);");
+                    query.setInt(1,Integer.parseInt(textId.getText()));
+                    query.setString(2, textCodigo.getText());
+                    query.setInt(3, comboTipo.getSelectedIndex() + 1) ;
+                    query.setString(4, textNombre.getText());
+                    query.setString(5, textApellido1.getText());
+                    query.setString(6, textApellido2.getText());
+                    query.setString(7, textDni.getText());
 
 
 
@@ -185,6 +236,35 @@ class VenFormEmpleado extends JFrame {
                 }
             }
         });
+
+        JButton botonEliminar = new JButton("Eliminar");
+        botonEliminar.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                Connection con = conectarConBD();
+
+
+                                                try {
+                                                    PreparedStatement query = con.prepareStatement("delete from empleado where id = ?");
+                                                    query.setInt(1, Integer.parseInt(textId.getText()));
+                                                    ResultSet rs = query.executeQuery();
+
+                                                } catch (SQLException sqle) {
+                                                    System.out.println("Error en la ejecución:"
+                                                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                                                } finally {
+                                                    cerrarConexion(con);
+                                                }
+                                                textId.setText("");
+                                                textNombre.setText("");
+                                                textCodigo.setText("");
+                                                textApellido1.setText("");
+                                                textApellido2.setText("");
+                                                textDni.setText("");
+                                            }
+                                        });
+
 
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
@@ -216,7 +296,7 @@ class ImagenFormEmpleado extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
+        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

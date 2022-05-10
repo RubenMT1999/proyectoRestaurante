@@ -12,28 +12,30 @@ public class Empleado {
     private String apellido2;
     private String dni;
 
-    public Empleado(int id, String codigo, Modelos.tipoEmpleado tipoEmpleado, String nombre, String apellido1,
+    public Empleado(int id,String nombre, String codigo, Modelos.tipoEmpleado tipoEmpleado, String apellido1,
                     String apellido2, String dni) {
         this.id = id;
+        this.nombre = nombre;
         this.codigo = codigo;
         this.tipoEmpleado = tipoEmpleado;
-        this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.dni = dni;
     }
 
-    public Empleado() {
-    }
+
 
     public Empleado(Empleado e){
         this.id = e.id;
+        this.nombre = e.nombre;
         this.codigo = e.codigo;
         this.tipoEmpleado = e.tipoEmpleado;
-        this.nombre = e.nombre;
         this.apellido1 = e.apellido1;
         this.apellido2 = e.apellido2;
         this.dni = e.dni;
+    }
+
+    public Empleado(int id, String codigo, Modelos.tipoEmpleado tipo, String nombre, String apellido1, String apellido2, String dni) {
     }
 
     public int getId() {
