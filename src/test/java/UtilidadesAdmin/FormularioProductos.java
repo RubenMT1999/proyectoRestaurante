@@ -5,6 +5,9 @@ import Modelos.Categoria;
 import Modelos.Empleado;
 import Modelos.tipoEmpleado;
 
+import Modelos.Categoria;
+import Modelos.Mesa;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -64,6 +67,7 @@ class VenFormProducto extends JFrame {
 
 
 
+
         JTextField textId = new JTextField();
         JTextField textNombre = new JTextField();
         JTextField textDescripcion= new JTextField();
@@ -88,6 +92,7 @@ class VenFormProducto extends JFrame {
         labelDescripcion.setFont(newFont);
         labelCategoria.setFont(newFont);
         labelPrecio.setFont(newFont);
+        labelCategoria.setFont(newFont);
 
 
         panelExterno.add(labelId);
@@ -104,6 +109,9 @@ class VenFormProducto extends JFrame {
 
         panelExterno.add(labelPrecio);
         panelExterno.add(textPrecio);
+
+        panelExterno.add(labelCategoria);
+        panelExterno.add(combo1);
 
         panelExterno.add(Box.createRigidArea(new Dimension(60,0)));
 
@@ -246,6 +254,34 @@ class VenFormProducto extends JFrame {
         panelExterno.add(panelBotones);
 
 
+        botonCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Connection con = conectarConBD();
+
+                try{
+                    PreparedStatement query = con.prepareStatement("insert into carta (nombre,descripcion," +
+                            "categoria,precio) values(?,?,?,?)");
+
+                    query.setString(1,textNombre.getText());
+                    query.setString(2,textDescripcion.getText());
+                    query.setInt(3,combo1.getSelectedIndex());
+                    query.setDouble(4,Double.parseDouble(textPrecio.getText()));
+
+                    ResultSet rs = query.executeQuery();
+
+                }catch (Exception o){
+                    System.out.println(o);
+                }finally {
+                    cerrarConexion(con);
+                }
+            }
+        });
+
+
+
+
 
         setBounds(500,50,600,900);
 
@@ -263,7 +299,8 @@ class ImagenFormProducto extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_mesas.jpg");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta + "\\imagenes\\fondo_productos.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

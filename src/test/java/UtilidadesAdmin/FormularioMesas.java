@@ -1,13 +1,22 @@
 package UtilidadesAdmin;
 
+import Modelos.Mesa;
+import UtilidadesBBDD.UtilidadesBBDD;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
 public class FormularioMesas{
@@ -86,6 +95,170 @@ class VenFormMesas extends JFrame {
         panelBotones.add(botonModificar);
         panelBotones.add(botonEliminar);
 
+
+        botonCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try{
+                    PreparedStatement stmt = conn.prepareStatement("insert into mesa(numero_mesa,max_personas,libre)" +
+                            " values (?,?,?)");
+
+                    stmt.setInt(1,Integer.parseInt(textNumeroMesa.getText()));
+                    stmt.setInt(2,Integer.parseInt(textNumeroComensales.getText()));
+                    stmt.setInt(3,1);
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Mesa insertada con éxito");
+
+                }catch (Exception o){
+                    o.printStackTrace();
+                    System.out.println("Error"+  o.getMessage());
+                    if (o instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya hay una mesa con ese Número");
+                    }else {
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "No se ha podido insertar la mesa." +
+                                    "Por favor, introduce los datos correctamente.");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
+
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+                Mesa m1 = null;
+
+                try{
+                    PreparedStatement stmt = conn.prepareStatement("select * from mesa where id = ?");
+
+                    stmt.setInt(1,Integer.parseInt(textId.getText()));
+                    ResultSet rs = stmt.executeQuery();
+
+                    while (rs.next()){
+                         m1 = new Mesa(rs.getInt("id"),
+                                rs.getInt("numero_mesa"),
+                                rs.getInt("max_personas"),
+                                rs.getInt("libre"));
+                    }
+
+
+                    textId.setText(Integer.toString(m1.getId()));
+                    textNumeroMesa.setText(Integer.toString(m1.getNumeroMesa()));
+                    textNumeroComensales.setText(Integer.toString(m1.getMaxPersonas()));
+
+                }catch (Exception i){
+                    System.out.println("error");
+                    i.printStackTrace();
+                    if (i instanceof NullPointerException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "No existe una mesa con ese ID");
+                    }else {
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Introduzca los datos correctamente");
+                    }
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
+
+
+
+        botonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try {
+                    PreparedStatement stmt2 = conn.prepareStatement("select id from mesa where id = ?");
+                    stmt2.setInt(1,Integer.parseInt(textId.getText()));
+                    ResultSet rs2 = stmt2.executeQuery();
+
+                    int id = 0;
+
+                    if (rs2.next()){
+                        id = rs2.getInt("id");
+                    }
+
+                    if (id >0){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Mesa borrada correctamente");
+                    }
+
+
+                    PreparedStatement stmt = conn.prepareStatement("delete from mesa where id = ?");
+                    stmt.setInt(1,Integer.parseInt(textId.getText()));
+                    ResultSet rs = stmt.executeQuery();
+
+                    textId.setText("");
+                    textNumeroComensales.setText("");
+                    textNumeroMesa.setText("");
+
+
+                }catch (Exception i){
+                    System.out.println("error");
+                    i.printStackTrace();
+                    if (i instanceof NullPointerException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "No existe una mesa con ese ID");
+                    }else {
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Introduzca los datos correctamente");
+                    }
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
+
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try{
+
+                    PreparedStatement stmt = conn.prepareStatement("update mesa set numero_mesa = ? ," +
+                            " max_personas = ? where id = ?");
+                    stmt.setInt(1,Integer.parseInt(textNumeroMesa.getText()));
+                    stmt.setInt(2,Integer.parseInt(textNumeroComensales.getText()));
+                    stmt.setInt(3,Integer.parseInt(textId.getText()));
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Mesa modificada con éxito");
+
+                }catch (Exception i){
+                    i.printStackTrace();
+
+                    if (i instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya existe ese Número de Mesa, elija otro");
+                    }
+
+                    if (i instanceof NumberFormatException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Rellena los datos correctamente");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
+
+
         panelBotones.setOpaque(false);
 
 
@@ -109,7 +282,8 @@ class ImagenFormMesas extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_mesas.jpg");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta+"\\imagenes\\fondo_mesas.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
