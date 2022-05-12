@@ -1,11 +1,18 @@
 package pantallas;
 
+import Modelos.Pedido;
+import UtilidadesCamarero.Aforo;
+import UtilidadesCamarero.Cuentas;
+import UtilidadesCamarero.MenuComandas;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -41,10 +48,33 @@ class VentanaCamarero extends JFrame {
         panelExterno.setBorder(BorderFactory.createEmptyBorder(130,0,0,0));
 
         JButton boton1 = new JButton();
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Aforo a1 = new Aforo();
+                a1.setVisible(true);
+            }
+        });
+
+
+
         JButton boton2 = new JButton();
+        boton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuComandas m1 = new MenuComandas();
+                m1.setVisible(true);
+            }
+        });
 
         JButton boton3 = new JButton();
-
+        boton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Cuentas c1 = new Cuentas();
+                c1.setVisible(true);
+            }
+        });
 
 
         File aforo = new File(getRutaAforo());

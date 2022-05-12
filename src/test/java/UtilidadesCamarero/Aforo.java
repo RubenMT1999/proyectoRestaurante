@@ -17,7 +17,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
-class Aforo extends JFrame {
+public class Aforo extends JFrame {
 
     public static  int contador;
 

@@ -36,6 +36,13 @@ public class Empleado {
     }
 
     public Empleado(int id, String codigo, Modelos.tipoEmpleado tipo, String nombre, String apellido1, String apellido2, String dni) {
+        this.id = id;
+        this.codigo = codigo;
+        this.tipoEmpleado = tipo;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.dni = dni;
     }
 
     public int getId() {

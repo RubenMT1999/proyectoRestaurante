@@ -19,7 +19,7 @@ public class PantallaPrincipal {
         PrimeraVentana ven1 = new PrimeraVentana();
         ven1.setVisible(true);
         ven1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        ven1.setSize(900,600);
+        ven1.setSize(550,600);
     }
 
 }
@@ -34,13 +34,13 @@ class PrimeraVentana extends JFrame {
 
 
 
-        JPanel panelExterno = crearPanelImagenFondo((new GridLayout(2,2,20,20)));
+        JPanel panelExterno = crearPanelImagenFondo((new GridLayout(2,2,80,80)));
 
         setContentPane(panelExterno);
         setResizable(false);
-        setLocationRelativeTo(null);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH);
+
         setVisible(true);
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(75,0,0,0));
@@ -128,7 +128,7 @@ class PrimeraVentana extends JFrame {
 
 
 
-        setBounds(200,300,600,400);
+        setBounds(425,100,600,400);
 
 
 

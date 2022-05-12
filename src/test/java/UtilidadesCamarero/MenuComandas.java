@@ -31,7 +31,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
-class MenuComandas extends JFrame {
+public class MenuComandas extends JFrame {
     public MenuComandas(){
 
         JPanel panelExterno = new JPanel(new GridLayout(3,1,80,10));
