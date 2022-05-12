@@ -263,7 +263,7 @@ class ImagenFormProducto extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_productos.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\fondo_mesas.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

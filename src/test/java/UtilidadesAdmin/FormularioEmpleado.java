@@ -150,7 +150,7 @@ class VenFormEmpleado extends JFrame {
                              rs.getInt("id")
                             ,rs.getString("nombre")
                             ,rs.getString("codigo")
-                            ,tipoEmpleado.valueOf(rs.getString("tipo"))
+                            ,tipoEmpleado.values()[rs.getInt("tipo")]
                             ,rs.getString("apellido1")
                             ,rs.getString("apellido2")
                             ,rs.getString("dni") );
@@ -302,7 +302,7 @@ class ImagenFormEmpleado extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
+        File miImagen = new File("C:\\Users\\daw20\\IdeaProjects\\proyectoRestaurante\\imagenes\\formularioEmpleado.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){
