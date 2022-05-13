@@ -4,6 +4,7 @@ import Modelos.Mesa;
 import Modelos.Pedido;
 import UtilidadesBBDD.ObtenerMesas;
 import UtilidadesBBDD.ObtenerPedido;
+import UtilidadesBBDD.obtenerCuenta;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.List;
@@ -109,6 +111,23 @@ public class Cuentas extends JFrame{
                         stmt.setInt(1,obtenerMesaInt);
 
                         ResultSet rs = stmt.executeQuery();
+
+                    //--------------------------------------------------
+
+                        PreparedStatement stmt2 = con.prepareStatement("select id from mesa where numero_mesa  = ?");
+
+                        stmt2.setInt(1,obtenerMesaInt);
+                        ResultSet rs2 = stmt2.executeQuery();
+
+                        int id_mesa = 0;
+                        if (rs2.next()){
+                            id_mesa = rs2.getInt("id");
+                        }
+
+
+
+                        new obtenerCuenta(id_mesa);
+
 
                     }catch (Exception z){
                         System.out.println(z);
