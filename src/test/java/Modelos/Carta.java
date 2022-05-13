@@ -9,6 +9,7 @@ public class Carta {
     private Categoria categoria;
     private Double precio;
 
+
     public Carta(int id, String nombre, String descripcion, Categoria categoria, Double precio) {
         this.id = id;
         this.nombre = nombre;
@@ -16,6 +17,8 @@ public class Carta {
         this.categoria = categoria;
         this.precio = precio;
     }
+
+
 
     public Carta(Carta c1) {
         this.id = c1.getId();
@@ -25,7 +28,7 @@ public class Carta {
         this.precio = c1.getPrecio();
     }
 
-    public Carta(int id, String nombre, String descripcion, double precio){
+    public Carta(int id, String nombre, String descripcion, String categoria, double precio){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

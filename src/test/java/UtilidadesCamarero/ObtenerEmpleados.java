@@ -28,10 +28,13 @@ public class ObtenerEmpleados {
 
 
             while (rs.next()){
-                Empleado empleado = new Empleado(rs.getInt("id"),rs.getString("codigo"),
-                        tipoEmpleado.values()[rs.getInt("tipo")],rs.getString("nombre"),
-                        rs.getString("apellido1"),rs.getString("apellido2"),
-                        rs.getString("dni"));
+                Empleado empleado = new Empleado(rs.getInt("id")
+                        ,rs.getString("codigo")
+                        ,tipoEmpleado.values()[rs.getInt("tipo")]
+                        ,rs.getString("nombre")
+                        ,rs.getString("apellido1")
+                        ,rs.getString("apellido2")
+                        ,rs.getString("dni"));
                 listaEmpleados.add(empleado);
             }
         }catch (Exception e){

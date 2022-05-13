@@ -1,21 +1,16 @@
 package UtilidadesAdmin;
 
+import Modelos.Carta;
 import Modelos.Categoria;
-import Modelos.Mesa;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
@@ -27,12 +22,11 @@ public class FormularioProductos{
     public static void main(String[] args) {
         VenFormProducto p1 = new VenFormProducto();
         p1.setVisible(true);
-        p1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         p1.setSize(500,800);
     }
 
 }
-
 
 
 class VenFormProducto extends JFrame {
@@ -43,10 +37,21 @@ class VenFormProducto extends JFrame {
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,0,0,0));
 
         JLabel labelId = new JLabel("ID:");
-        JLabel labelCodigo = new JLabel("Nombre:");
+        JLabel labelNombre = new JLabel("Nombre:");
         JLabel labelDescripcion = new JLabel("Descripción:");
+        JLabel labelCategoria = new JLabel("Categoria");
         JLabel labelPrecio = new JLabel("Precio:");
-        JLabel labelCategoria = new JLabel("Categoría:");
+        JComboBox comboCategoria = new JComboBox<String>();
+        comboCategoria.addItem("bebida");
+        comboCategoria.addItem("entrante");
+        comboCategoria.addItem("postre");
+        comboCategoria.addItem("carne");
+        comboCategoria.addItem("pescado");
+        comboCategoria.addItem("pasta");
+        comboCategoria.addItem("vegetariano");
+
+
+
         JComboBox combo1 = new JComboBox<>();
         combo1.addItem(Categoria.bebida);
         combo1.addItem(Categoria.entrante);
@@ -56,11 +61,6 @@ class VenFormProducto extends JFrame {
         combo1.addItem(Categoria.pasta);
         combo1.addItem(Categoria.vegetariano);
 
-
-        JButton botonCrear = new JButton("Crear");
-        JButton botonBuscar = new JButton("Buscar");
-        JButton botonModificar = new JButton("Modificar");
-        JButton botonEliminar = new JButton("Eliminar");
 
 
 
@@ -86,8 +86,9 @@ class VenFormProducto extends JFrame {
 
 
         labelId.setFont(newFont);
-        labelCodigo.setFont(newFont);
+        labelNombre.setFont(newFont);
         labelDescripcion.setFont(newFont);
+        labelCategoria.setFont(newFont);
         labelPrecio.setFont(newFont);
         labelCategoria.setFont(newFont);
 
@@ -95,19 +96,186 @@ class VenFormProducto extends JFrame {
         panelExterno.add(labelId);
         panelExterno.add(textId);
 
-        panelExterno.add(labelCodigo);
+        panelExterno.add(labelNombre);
         panelExterno.add(textNombre);
 
         panelExterno.add(labelDescripcion);
         panelExterno.add(textDescripcion);
 
+        panelExterno.add(labelCategoria);
+        panelExterno.add(comboCategoria);
+
         panelExterno.add(labelPrecio);
         panelExterno.add(textPrecio);
 
-        panelExterno.add(labelCategoria);
-        panelExterno.add(combo1);
+
 
         panelExterno.add(Box.createRigidArea(new Dimension(60,0)));
+
+        JButton botonCrear = new JButton("Crear");
+        botonCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection con = conectarConBD();
+                try {
+
+                    PreparedStatement query = con.prepareStatement("insert into carta (id, nombre, descripcion, categoria, precio) values (?,?,?,?,?);");
+                    query.setInt(1,Integer.parseInt(textId.getText()));
+                    query.setString(2, textNombre.getText());
+                    query.setString(3, textDescripcion.getText());
+                    query.setInt(4,combo1.getSelectedIndex() + 1 );
+                    query.setDouble(5, Double.parseDouble(textPrecio.getText()));
+
+                    query.executeQuery();
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+                textId.setText("");
+                textNombre.setText("");
+                textDescripcion.setText("");
+                textPrecio.setText("");
+            }
+        });
+
+        JButton botonEliminar = new JButton("Eliminar");
+        botonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection con = conectarConBD();
+
+
+                try {
+                    PreparedStatement query = con.prepareStatement("delete from carta where id = ?");
+                    query.setInt(1, Integer.parseInt(textId.getText()));
+                    ResultSet rs = query.executeQuery();
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto eliminado correctamente");
+
+                } catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+                textId.setText("");
+                textNombre.setText("");
+                textDescripcion.setText("");
+                textPrecio.setText("");
+
+            }
+        });
+        JButton botonBuscar = new JButton("Buscar");
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Carta carta = null;
+
+                Connection con = conectarConBD();
+
+                try {
+                    PreparedStatement query = con.prepareStatement("select * from carta where id  = ? ");
+                    query.setInt(1, Integer.parseInt(textId.getText()));
+                    ResultSet rs = query.executeQuery();
+
+                    while (rs.next()){
+                        carta = new Carta(
+                                rs.getInt("id")
+                                ,rs.getString("nombre")
+                                ,rs.getString("descripcion")
+                                ,Categoria.values()[rs.getInt("categoria")]
+                                ,rs.getDouble("precio"));
+                    }
+
+
+
+                }catch (SQLException sqle) {
+                    System.out.println("Error en la ejecución:"
+                            + sqle.getErrorCode() + " " + sqle.getMessage());
+
+                } finally {
+                    cerrarConexion(con);
+                }
+                if (carta == null ) {
+                    textId.setText("");
+                    textNombre.setText("");
+                    textDescripcion.setText("");
+                    textPrecio.setText("");
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "No existe ningun producto con esa ID");
+                }
+                else
+                    textNombre.setText(carta.getNombre());
+                    textDescripcion.setText(carta.getDescripcion());
+                if (carta.getCategoria() == Categoria.bebida){
+                    comboCategoria.setSelectedIndex(0);
+                }
+                if (carta.getCategoria() == Categoria.entrante){
+                    comboCategoria.setSelectedIndex(1);
+                }
+                if (carta.getCategoria() == Categoria.postre){
+                    comboCategoria.setSelectedIndex(2);
+                }
+                if (carta.getCategoria() == Categoria.carne){
+                    comboCategoria.setSelectedIndex(3);
+                }
+                if (carta.getCategoria() == Categoria.pescado){
+                    comboCategoria.setSelectedIndex(4);
+                }
+                if (carta.getCategoria() == Categoria.pasta){
+                    comboCategoria.setSelectedIndex(5);
+                }
+                if (carta.getCategoria() == Categoria.vegetariano){
+                    comboCategoria.setSelectedIndex(6);
+                }
+                textPrecio.setText(String.valueOf(carta.getPrecio()));
+
+            }
+        });
+        JButton botonModificar = new JButton("Modificar");
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try{
+
+                    PreparedStatement stmt = conn.prepareStatement("update carta set nombre = ?, descripcion = ? , categoria = ? , precio = ? where id = ? ");
+                    stmt.setString(1,textNombre.getText());
+                    stmt.setString(2, textDescripcion.getText());
+                    stmt.setInt(3,comboCategoria.getSelectedIndex());
+                    stmt.setDouble(4, Double.parseDouble(textPrecio.getText()));
+                    stmt.setInt(5, Integer.parseInt(textId.getText()));
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto modificado correctamente");
+
+                }catch (Exception i){
+                    i.printStackTrace();
+
+                    if (i instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya existe ese Número de Mesa, elija otro");
+                    }
+
+                    if (i instanceof NumberFormatException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Rellena los datos correctamente");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
+
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
 
