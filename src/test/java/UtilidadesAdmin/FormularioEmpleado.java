@@ -13,10 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,20 +208,20 @@ class VenFormEmpleado extends JFrame {
 
 
 
-                    PreparedStatement query = con.prepareStatement("insert into empleado (id, codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?,?);");
-                    query.setInt(1,Integer.parseInt(textId.getText()));
-                    query.setString(2, textCodigo.getText());
-                    query.setInt(3, comboTipo.getSelectedIndex() + 1) ;
-                    query.setString(4, textNombre.getText());
-                    query.setString(5, textApellido1.getText());
-                    query.setString(6, textApellido2.getText());
-                    query.setString(7, textDni.getText());
+                    PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
+                    query.setString(1, textCodigo.getText());
+                    query.setInt(2, comboTipo.getSelectedIndex() ) ;
+                    query.setString(3, textNombre.getText());
+                    query.setString(4, textApellido1.getText());
+                    query.setString(5, textApellido2.getText());
+                    query.setString(6, textDni.getText());
 
 
 
                     query.executeQuery();
 
-
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Empleado guardado correctamente");
 
 
                 } catch (SQLException sqle) {
@@ -254,6 +251,8 @@ class VenFormEmpleado extends JFrame {
                                                     PreparedStatement query = con.prepareStatement("delete from empleado where id = ?");
                                                     query.setInt(1, Integer.parseInt(textId.getText()));
                                                     ResultSet rs = query.executeQuery();
+                                                    JOptionPane.showMessageDialog(panelExterno,
+                                                            "Empleado eliminado correctamente");
 
                                                 } catch (SQLException sqle) {
                                                     System.out.println("Error en la ejecución:"
@@ -261,6 +260,7 @@ class VenFormEmpleado extends JFrame {
 
                                                 } finally {
                                                     cerrarConexion(con);
+
                                                 }
                                                 textId.setText("");
                                                 textNombre.setText("");
@@ -271,12 +271,53 @@ class VenFormEmpleado extends JFrame {
                                             }
                                         });
 
+        JButton botonModificar = new JButton("Modificar");
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try{
+
+                    PreparedStatement stmt = conn.prepareStatement("update empleado set codigo = ?, tipo = ?, nombre = ?, apellido1 = ?, apellido2 = ?, dni = ?  where id = ? ");
+                    stmt.setString(1,textCodigo.getText());
+                    stmt.setInt(2, comboTipo.getSelectedIndex());
+                    stmt.setString(3,textNombre.getText());
+                    stmt.setString(4, textApellido1.getText());
+                    stmt.setString(5, textApellido2.getText());
+                    stmt.setString(6,textDni.getText());
+                    stmt.setInt(7, Integer.parseInt(textId.getText()));
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Empleado modificado correctamente");
+
+                }catch (Exception i){
+                    i.printStackTrace();
+
+                    if (i instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya existe ese Empleado, elija otro");
+                    }
+
+                    if (i instanceof NumberFormatException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Rellena los datos correctamente");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
 
 
-        JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
+        JPanel panelBotones = new JPanel(new GridLayout(1,4,10,10));
 
         panelBotones.add(botonBuscar);
         panelBotones.add(botonGuardar);
+        panelBotones.add(botonModificar);
         panelBotones.add(botonEliminar);
 
         panelBotones.setOpaque(false);

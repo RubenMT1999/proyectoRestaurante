@@ -1,11 +1,15 @@
 package pantallas;
 
+import UtilidadesCamarero.Aforo;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,6 +59,13 @@ class VentanaCamarero extends JFrame {
             Image imagenAforo = ImageIO.read(aforo);
             Image imagenResultado = imagenAforo.getScaledInstance(100,100,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
+            boton1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   Aforo a1 = new Aforo();
+                    a1.setVisible(true);
+                }
+            });
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }

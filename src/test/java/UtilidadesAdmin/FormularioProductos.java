@@ -2,26 +2,15 @@ package UtilidadesAdmin;
 
 import Modelos.Carta;
 import Modelos.Categoria;
-import Modelos.Empleado;
-import Modelos.tipoEmpleado;
-
-import Modelos.Categoria;
-import Modelos.Mesa;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
@@ -62,6 +51,15 @@ class VenFormProducto extends JFrame {
         comboCategoria.addItem("vegetariano");
 
 
+
+        JComboBox combo1 = new JComboBox<>();
+        combo1.addItem(Categoria.bebida);
+        combo1.addItem(Categoria.entrante);
+        combo1.addItem(Categoria.postre);
+        combo1.addItem(Categoria.carne);
+        combo1.addItem(Categoria.pescado);
+        combo1.addItem(Categoria.pasta);
+        combo1.addItem(Categoria.vegetariano);
 
 
 
@@ -110,8 +108,7 @@ class VenFormProducto extends JFrame {
         panelExterno.add(labelPrecio);
         panelExterno.add(textPrecio);
 
-        panelExterno.add(labelCategoria);
-        panelExterno.add(combo1);
+
 
         panelExterno.add(Box.createRigidArea(new Dimension(60,0)));
 
@@ -126,7 +123,7 @@ class VenFormProducto extends JFrame {
                     query.setInt(1,Integer.parseInt(textId.getText()));
                     query.setString(2, textNombre.getText());
                     query.setString(3, textDescripcion.getText());
-                    query.setInt(4,comboCategoria.getSelectedIndex() + 1 );
+                    query.setInt(4,combo1.getSelectedIndex() + 1 );
                     query.setDouble(5, Double.parseDouble(textPrecio.getText()));
 
                     query.executeQuery();
@@ -156,6 +153,8 @@ class VenFormProducto extends JFrame {
                     PreparedStatement query = con.prepareStatement("delete from carta where id = ?");
                     query.setInt(1, Integer.parseInt(textId.getText()));
                     ResultSet rs = query.executeQuery();
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto eliminado correctamente");
 
                 } catch (SQLException sqle) {
                     System.out.println("Error en la ejecución:"
@@ -239,6 +238,43 @@ class VenFormProducto extends JFrame {
             }
         });
         JButton botonModificar = new JButton("Modificar");
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
+
+                try{
+
+                    PreparedStatement stmt = conn.prepareStatement("update carta set nombre = ?, descripcion = ? , categoria = ? , precio = ? where id = ? ");
+                    stmt.setString(1,textNombre.getText());
+                    stmt.setString(2, textDescripcion.getText());
+                    stmt.setInt(3,comboCategoria.getSelectedIndex());
+                    stmt.setDouble(4, Double.parseDouble(textPrecio.getText()));
+                    stmt.setInt(5, Integer.parseInt(textId.getText()));
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto modificado correctamente");
+
+                }catch (Exception i){
+                    i.printStackTrace();
+
+                    if (i instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya existe ese Número de Mesa, elija otro");
+                    }
+
+                    if (i instanceof NumberFormatException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Rellena los datos correctamente");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
 
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));
