@@ -271,22 +271,24 @@ class VenFormEmpleado extends JFrame {
 
                     PreparedStatement stmt = conn.prepareStatement("update empleado set codigo = ?, tipo = ?, nombre = ?, apellido1 = ?, apellido2 = ?, dni = ? where id = ?");
                     stmt.setString(1,textCodigo.getText());
-                    stmt.setString(2, textDescripcion.getText());
-                    stmt.setInt(3,comboCategoria.getSelectedIndex());
-                    stmt.setDouble(4, Double.parseDouble(textPrecio.getText()));
-                    stmt.setInt(5, Integer.parseInt(textId.getText()));
+                    stmt.setInt(2, comboTipo.getSelectedIndex());
+                    stmt.setString(3,textNombre.getText());
+                    stmt.setString(4, textApellido1.getText());
+                    stmt.setString(5, textApellido2.getText());
+                    stmt.setString(6, textDni.getText());
+                    stmt.setInt(7, Integer.parseInt(textId.getText()));
 
                     ResultSet rs = stmt.executeQuery();
 
                     JOptionPane.showMessageDialog(panelExterno,
-                            "Producto modificado correctamente");
+                            "Empleado modificado correctamente");
 
                 }catch (Exception i){
                     i.printStackTrace();
 
                     if (i instanceof SQLIntegrityConstraintViolationException){
                         JOptionPane.showMessageDialog(panelExterno,
-                                "Ya existe ese Número de Mesa, elija otro");
+                                "Ya existe ese empleado, elija otro");
                     }
 
                     if (i instanceof NumberFormatException){
@@ -305,6 +307,7 @@ class VenFormEmpleado extends JFrame {
 
         panelBotones.add(botonBuscar);
         panelBotones.add(botonGuardar);
+        panelBotones.add(botonModificar);
         panelBotones.add(botonEliminar);
 
         panelBotones.setOpaque(false);
