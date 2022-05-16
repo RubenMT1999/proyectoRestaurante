@@ -19,22 +19,12 @@ import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
-public class FormularioMesas{
-
-
-    public static void main(String[] args) {
-        VenFormMesas m1 = new VenFormMesas();
-        m1.setVisible(true);
-        m1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        m1.setSize(500,600);
-    }
-
-}
 
 
 
-class VenFormMesas extends JFrame {
-    public VenFormMesas(){
+
+public class FormularioMesas extends JFrame {
+    public FormularioMesas(){
 
         JPanel panelExterno = new JPanel(new GridLayout(15,2,10,10));
         panelExterno.setOpaque(false);
@@ -267,11 +257,19 @@ class VenFormMesas extends JFrame {
 
 
         setBounds(500,50,600,900);
+        setResizable(false);
+        setVisible(true);
 
         ImagenFormMesas img1 = new ImagenFormMesas();
         img1.add(panelExterno);
         add(img1);
 
+    }
+    public static void main(String[] args) {
+        FormularioMesas m1 = new FormularioMesas();
+        m1.setVisible(true);
+        m1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        m1.setSize(500,600);
     }
 }
 

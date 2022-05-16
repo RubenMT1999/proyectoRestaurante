@@ -16,21 +16,11 @@ import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
-public class FormularioProductos{
 
 
-    public static void main(String[] args) {
-        VenFormProducto p1 = new VenFormProducto();
-        p1.setVisible(true);
 
-        p1.setSize(500,800);
-    }
-
-}
-
-
-class VenFormProducto extends JFrame {
-    public VenFormProducto(){
+public class FormularioProductos extends JFrame {
+    public FormularioProductos(){
 
         JPanel panelExterno = new JPanel(new GridLayout(15,2,10,10));
         panelExterno.setOpaque(false);
@@ -320,11 +310,18 @@ class VenFormProducto extends JFrame {
 
 
         setBounds(500,50,600,900);
+        setResizable(false);
+        setVisible(true);
 
         ImagenFormProducto img1 = new ImagenFormProducto();
         img1.add(panelExterno);
         add(img1);
 
+    }
+    public static void main(String[] args) {
+        FormularioProductos p1 = new FormularioProductos();
+        p1.setVisible(true);
+        p1.setSize(500,800);
     }
 }
 

@@ -21,22 +21,11 @@ import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
-public class FormularioEmpleado{
-
-
-    public static void main(String[] args) {
-        VenFormEmpleado form1 = new VenFormEmpleado();
-        form1.setVisible(true);
-        form1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        form1.setSize(500,800);
-    }
-
-}
 
 
 
-class VenFormEmpleado extends JFrame {
-    public VenFormEmpleado(){
+public class FormularioEmpleado extends JFrame {
+    public FormularioEmpleado(){
 
 
 
@@ -318,11 +307,21 @@ class VenFormEmpleado extends JFrame {
 
 
         setBounds(500,50,600,900);
+        setResizable(false);
+        setVisible(true);
+
 
         ImagenFormEmpleado img1 = new ImagenFormEmpleado();
         img1.add(panelExterno);
         add(img1);
 
+    }
+
+    public static void main(String[] args) {
+        FormularioEmpleado form1 = new FormularioEmpleado();
+        form1.setVisible(true);
+        form1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        form1.setSize(500,800);
     }
 }
 

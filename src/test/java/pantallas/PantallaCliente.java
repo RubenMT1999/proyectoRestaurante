@@ -1,11 +1,15 @@
 package pantallas;
 
+import UtilidadesCliente.MenuCliente;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -26,6 +30,8 @@ class VentanaCliente extends JFrame {
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(200,0,0,0));
 
+        setResizable(false);
+
         JButton boton1 = new JButton();
 
 
@@ -37,6 +43,16 @@ class VentanaCliente extends JFrame {
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
+
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuCliente mc = new MenuCliente();
+                mc.setVisible(true);
+                mc.setSize(500, 800);
+
+            }
+        });
 
         panelExterno.add(boton1);
 

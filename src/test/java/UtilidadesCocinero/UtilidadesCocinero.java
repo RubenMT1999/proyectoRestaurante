@@ -30,35 +30,23 @@ import java.util.stream.Collectors;
 import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
-public class UtilidadesCocinero {
-    public static void main(String[] args) {
-    VentanaComanda v1 = new VentanaComanda();
-        v1.setVisible(true);
-        v1.setSize(new Dimension(800, 600));
-    }
-}
+
     
 
 
-class VentanaComanda extends JFrame{
+public class UtilidadesCocinero extends JFrame{
     private JTable tabla1 = new JTable() ;
     private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
 
 
 
 
-    public VentanaComanda() {
+    public UtilidadesCocinero() {
 
 
 
         JPanel panelExterno = crearPanelImagenFondo(null);
-        setContentPane(panelExterno);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH);
-        setVisible(true);
-        setResizable(false);
+
         panelExterno.setOpaque(false);
         panelExterno.setBorder(BorderFactory.createEmptyBorder(170,170,170,170));
 
@@ -242,6 +230,13 @@ class VentanaComanda extends JFrame{
         panelExterno.add(new JLabel("", SwingConstants.CENTER));
         panelExterno.add(botonesFinales);
 
+        setContentPane(panelExterno);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);
+        setResizable(false);
+
 
 
 
@@ -289,6 +284,11 @@ class VentanaComanda extends JFrame{
     private static  String getRutaImagenFondo(){
         String ruta = new File("").getAbsolutePath();
         return ruta + "\\imagenes\\fondo_cocinero_2.jpg";
+    }
+    public static void main(String[] args) {
+        UtilidadesCocinero v1 = new UtilidadesCocinero();
+        v1.setVisible(true);
+        v1.setSize(new Dimension(800, 600));
     }
 
 }

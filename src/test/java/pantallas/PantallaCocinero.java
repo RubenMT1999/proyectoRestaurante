@@ -1,5 +1,7 @@
 package pantallas;
 
+import UtilidadesCocinero.UtilidadesCocinero;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -52,6 +54,13 @@ class VentanaCocinero extends JFrame {
                 fuenteBoton,Color.BLACK);
 
 
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UtilidadesCocinero utC = new UtilidadesCocinero();
+                utC.setSize(800, 600);
+            }
+        });
 
         boton1.setBorder(esteBorde);
 

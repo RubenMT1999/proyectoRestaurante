@@ -1,6 +1,8 @@
 package pantallas;
 
 
+import UtilidadesAdmin.FormularioEmpleado;
+import UtilidadesAdmin.FormularioMesas;
 import UtilidadesAdmin.FormularioProductos;
 
 
@@ -79,6 +81,35 @@ class VentanaAdmin extends JFrame {
         } catch (Exception ex) {
             System.out.println("No se pudo cargar la imagen");
         }
+
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FormularioEmpleado fme = new FormularioEmpleado();
+                fme.setVisible(true);
+                fme.setSize(500, 800);
+            }
+        });
+
+        boton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                FormularioProductos fme = new FormularioProductos();
+                fme.setVisible(true);
+                fme.setSize(500, 800);
+            }
+        });
+
+        boton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FormularioMesas fme = new FormularioMesas();
+                fme.setVisible(true);
+                fme.setSize(500, 600);
+
+            }
+        });
 
 
         panelExterno.add(boton1);

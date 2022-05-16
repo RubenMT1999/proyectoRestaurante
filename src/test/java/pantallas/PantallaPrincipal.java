@@ -83,7 +83,9 @@ class PrimeraVentana extends JFrame {
             boton3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new VentanaAdmin();
+
+                    VentanaAdmin vad = new VentanaAdmin();
+                    vad.setSize(400, 500);
                 }
             });
 
