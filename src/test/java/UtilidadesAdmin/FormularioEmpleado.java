@@ -13,10 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,7 +261,44 @@ class VenFormEmpleado extends JFrame {
                                                 textDni.setText("");
                                             }
                                         });
+        JButton botonModificar = new JButton("Modificar");
+        botonModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn = conectarConBD();
 
+                try{
+
+                    PreparedStatement stmt = conn.prepareStatement("update empleado set codigo = ?, tipo = ?, nombre = ?, apellido1 = ?, apellido2 = ?, dni = ? where id = ?");
+                    stmt.setString(1,textCodigo.getText());
+                    stmt.setString(2, textDescripcion.getText());
+                    stmt.setInt(3,comboCategoria.getSelectedIndex());
+                    stmt.setDouble(4, Double.parseDouble(textPrecio.getText()));
+                    stmt.setInt(5, Integer.parseInt(textId.getText()));
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto modificado correctamente");
+
+                }catch (Exception i){
+                    i.printStackTrace();
+
+                    if (i instanceof SQLIntegrityConstraintViolationException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Ya existe ese Número de Mesa, elija otro");
+                    }
+
+                    if (i instanceof NumberFormatException){
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Rellena los datos correctamente");
+                    }
+
+                }finally {
+                    cerrarConexion(conn);
+                }
+            }
+        });
 
 
         JPanel panelBotones = new JPanel(new GridLayout(1,3,10,10));

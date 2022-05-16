@@ -1,5 +1,9 @@
 package pantallas;
 
+import UtilidadesCamarero.Aforo;
+import UtilidadesCamarero.Cuentas;
+import UtilidadesCamarero.MenuComandas;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
