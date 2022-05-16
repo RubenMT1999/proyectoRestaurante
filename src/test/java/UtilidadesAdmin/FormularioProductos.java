@@ -292,10 +292,12 @@ public class FormularioProductos extends JFrame {
 
                     query.setString(1,textNombre.getText());
                     query.setString(2,textDescripcion.getText());
-                    query.setInt(3,combo1.getSelectedIndex());
+                    query.setInt(3,comboCategoria.getSelectedIndex());
                     query.setDouble(4,Double.parseDouble(textPrecio.getText()));
 
                     ResultSet rs = query.executeQuery();
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Producto creado correctamente");
 
                 }catch (Exception o){
                     System.out.println(o);

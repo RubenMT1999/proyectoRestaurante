@@ -130,7 +130,7 @@ class PrimeraVentana extends JFrame {
 
 
 
-        setBounds(425,100,600,400);
+        setBounds(600,100,600,400);
 
 
 

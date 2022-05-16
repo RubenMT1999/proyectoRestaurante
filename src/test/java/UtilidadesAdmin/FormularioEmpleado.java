@@ -197,18 +197,19 @@ public class FormularioEmpleado extends JFrame {
 
 
 
-                    PreparedStatement query = con.prepareStatement("insert into empleado (id, codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?,?);");
-                    query.setInt(1,Integer.parseInt(textId.getText()));
-                    query.setString(2, textCodigo.getText());
-                    query.setInt(3, comboTipo.getSelectedIndex() + 1) ;
-                    query.setString(4, textNombre.getText());
-                    query.setString(5, textApellido1.getText());
-                    query.setString(6, textApellido2.getText());
-                    query.setString(7, textDni.getText());
+                    PreparedStatement query = con.prepareStatement("insert into empleado (codigo, tipo, nombre, apellido1, apellido2, dni) values (?,?,?,?,?,?);");
+                    query.setString(1, textCodigo.getText());
+                    query.setInt(2, comboTipo.getSelectedIndex()) ;
+                    query.setString(3, textNombre.getText());
+                    query.setString(4, textApellido1.getText());
+                    query.setString(5, textApellido2.getText());
+                    query.setString(6, textDni.getText());
 
 
 
                     query.executeQuery();
+                    JOptionPane.showMessageDialog(panelExterno,
+                            "Empleado guardado correctamente");
 
 
 
@@ -234,6 +235,8 @@ public class FormularioEmpleado extends JFrame {
                                                     PreparedStatement query = con.prepareStatement("delete from empleado where id = ?");
                                                     query.setInt(1, Integer.parseInt(textId.getText()));
                                                     ResultSet rs = query.executeQuery();
+                                                    JOptionPane.showMessageDialog(panelExterno,
+                                                            "Empleado eliminado correctamente");
 
                                                 } catch (SQLException sqle) {
                                                     System.out.println("Error en la ejecución:"
