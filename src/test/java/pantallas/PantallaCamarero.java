@@ -51,7 +51,7 @@ class VentanaCamarero extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Aforo a1 = new Aforo();
-                a1.setVisible(true);
+
             }
         });
 
