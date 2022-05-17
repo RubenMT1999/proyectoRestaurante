@@ -102,46 +102,12 @@ public class UtilidadesCocinero extends JFrame{
 
 
 
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.add(tabla1);
-        tabla1.setFillsViewportHeight(true);
-
-        JButton botonSumar = new JButton("+");
-        botonSumar.setSize(10,10);
-        botonSumar.setVisible(true);
-        botonSumar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            int row = tabla1.getSelectedRow();
-            String valorIds = tabla1.getModel().getValueAt(row,0).toString();
-            int valorId = Integer.parseInt(valorIds);
-
-            Connection con = conectarConBD();
-                try {
-                    PreparedStatement query = con.prepareStatement("call procedure_cocinero_sumar (?,1);");
-                    query.setInt(1,valorId);
-                    query.executeQuery();
-                    int num_mesa = (int) numMesa.getSelectedItem();
-                    consultaComandas(tabla1,num_mesa);
-                    tabla1.repaint();
-
-
-
-                } catch (SQLException sqle) {
-                    System.out.println("Error en la ejecución:"
-                            + sqle.getErrorCode() + " " + sqle.getMessage());
-
-                } finally {
-                    cerrarConexion(con);
-                }
 
 
 
 
-            }
-        });
 
-        JButton botonRestar = new JButton("-");
+        JButton botonRestar = new JButton("+");
         botonRestar.setSize(10,10);
         botonRestar.setVisible(true);
         botonRestar.addActionListener(new ActionListener() {
@@ -156,6 +122,7 @@ public class UtilidadesCocinero extends JFrame{
                     query.setInt(1,valorId);
                     query.executeQuery();
                     int num_mesa = (int) numMesa.getSelectedItem();
+                    int sel = row - 1 ;
                     consultaComandas(tabla1,num_mesa);
                     tabla1.repaint();
 
@@ -184,25 +151,31 @@ public class UtilidadesCocinero extends JFrame{
                 List<Mesa> mesa1 = listaMesas.stream().filter(mesa -> mesa.getNumeroMesa() == num_mesa).collect(Collectors.toList());
                 List<Pedido> l1 = listaPedidos.stream().filter(m -> m.getId_mesa()== mesa1.get(0).getId()).filter(p->p.getPagado()==0).collect(Collectors.toList());
 
-                if (tabla1.getRowCount() != 0 ) {
-                    JOptionPane.showMessageDialog(panelExterno,
-                            "Aún quedan productos, no puede poner la cuenta completada");
+                int filas = tabla1.getRowCount();
+                boolean existe = true;
+
+                for (int i = 0; i<filas; i++){
+                    String valor1 = tabla1.getValueAt(i, 2).toString();
+                    if (!valor1.equals(tabla1.getValueAt(i,3).toString())){
+                        existe = false;
+                    }
                 }
-                else {
 
-
-                    Connection con = conectarConBD();
+                if (existe = true){Connection con = conectarConBD();
                     try {
                         CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
 
-                        stmt2.setString(1, l1.get(0).getCodigo());
+                        stmt2.setString(1, listaPedidos.get(0).getCodigo());
                         stmt2.executeQuery();
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     } finally {
                         cerrarConexion(con);
                     }
+
+
                 }
+
             }
         });
 
@@ -210,15 +183,17 @@ public class UtilidadesCocinero extends JFrame{
 
         JPanel botonesFinales = new JPanel(new GridLayout(1,2));
 
-        botonesFinales.add(botonSumar);
+
         botonesFinales.add(botonRestar);
         botonesFinales.add(botonCuenta);
 
 
 
-        JPanel panelTabla = new JPanel(new GridLayout(1,1));
+        JPanel panelTabla = new JPanel(new GridLayout(0,1));
 
         panelTabla.add(tabla1);
+        panelTabla.add(tabla1.getTableHeader(),BorderLayout.CENTER);
+        panelTabla.add(tabla1,BorderLayout.SOUTH);
 
 
 
@@ -246,7 +221,7 @@ public class UtilidadesCocinero extends JFrame{
         List<Consumicion> comandas = ObtenerComandas.ObtenerComandas(nummesa);
 
         String data[][] = {};
-        String columnNames[] = {"Id","Producto", "Cantidad",};
+        String columnNames[] = {"Id","Producto", "Servida","Pedida"};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         tabla1.setModel(model);
@@ -254,12 +229,14 @@ public class UtilidadesCocinero extends JFrame{
 
         for (Consumicion c1 : comandas){
 
-            model.insertRow(0, new Object[]{c1.getId(),c1.getId_producto(), c1.getCantidad_pedida()});
+            model.insertRow(0, new Object[]{c1.getId(),c1.getId_producto(), c1.getCantidad_pedida(), c1.getCantidad_servida()});
 
 
         }
         return tabla1;
     }
+
+
 
     private JPanel crearPanelImagenFondo(GridLayout gridLayout) {
         JPanel panel = null;

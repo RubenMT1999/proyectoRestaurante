@@ -31,10 +31,11 @@ public class Consumicion {
         this.codigo_pedido = c1.getCodigo_pedido();
     }
 
-    public Consumicion(int id, String id_producto, int cantidad_pedida) {
+    public Consumicion(int id, String id_producto, int cantidad_pedida, int cantidad_servida) {
         this.id = id;
         this.id_producto = id_producto;
         this.cantidad_pedida = cantidad_pedida;
+        this.cantidad_servida = cantidad_servida;
     }
 
     public int getId() {
