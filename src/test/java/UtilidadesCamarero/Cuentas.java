@@ -124,8 +124,6 @@ public class Cuentas extends JFrame{
                             id_mesa = rs2.getInt("id");
                         }
 
-
-
                         new obtenerCuenta(id_mesa);
 
 

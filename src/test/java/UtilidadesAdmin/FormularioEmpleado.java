@@ -32,7 +32,7 @@ public class FormularioEmpleado extends JFrame {
 
         JPanel panelExterno = new JPanel(new GridLayout(16,1,10,10));
         panelExterno.setOpaque(false);
-        panelExterno.setBorder(BorderFactory.createEmptyBorder(75,0,0,0));
+        panelExterno.setBorder(BorderFactory.createEmptyBorder(110,40,0,0));
 
         JLabel labelId = new JLabel("ID:");
         JLabel labelNombre = new JLabel("Nombre:");
@@ -46,17 +46,6 @@ public class FormularioEmpleado extends JFrame {
         comboTipo.addItem("camarero");
         comboTipo.addItem("cocinero");
         comboTipo.addItem("admin");
-
-
-
-
-
-
-
-
-
-
-
 
 
 

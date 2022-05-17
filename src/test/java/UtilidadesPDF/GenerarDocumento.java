@@ -7,7 +7,9 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GenerarDocumento {
@@ -22,8 +24,14 @@ public class GenerarDocumento {
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            PDFont font = PDType1Font.HELVETICA;
-            contentStream.setFont(font,14);
+            String imgUrl = new File("").getAbsolutePath()+"\\imagenes\\fotoCuenta.JPG";
+
+            PDImageXObject pdImage = PDImageXObject.createFromFile(imgUrl,document);
+
+            contentStream.drawImage(pdImage,400,600);
+
+            PDFont font = PDType1Font.TIMES_BOLD;
+            contentStream.setFont(font,17);
 
             contentStream.beginText();
             contentStream.setLeading(50f);
@@ -36,20 +44,54 @@ public class GenerarDocumento {
 
             contentStream.newLine();
             contentStream.showText("Código de Pedido: "+ c1.getCodigo());
+            contentStream.endText();
+
+            contentStream.moveTo(50,550); //Start point coordinates
+            contentStream.lineTo(550, 550); //End point coordinates
+            contentStream.setLineWidth(1f);   //Line thickness
+            contentStream.stroke();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(250,500);
+            contentStream.showText("CONSUMICIÓN: ");
+            contentStream.newLineAtOffset(-250,0);
 
             contentStream.newLine();
-            contentStream.showText("CONSUMICIÓN: ");
+            contentStream.newLineAtOffset(75,0);
+            contentStream.showText("Producto");
+            contentStream.newLineAtOffset(200,0);
+            contentStream.showText("Cantidad");
+            contentStream.newLineAtOffset(175,0);
+            contentStream.showText("Precio");
 
+            contentStream.newLineAtOffset(-450,0);
+
+            PDFont font2 = PDType1Font.COURIER;
+            contentStream.setFont(font2,14);
 
             for (Producto p: c1.getListaProductos()){
                 contentStream.newLine();
-                contentStream.newLineAtOffset(200,0);
-                contentStream.showText(p.getNombre() +".........     "+ p.getCantidadPedida() +".........    "+ p.getPrecioTotalProducto());
-                contentStream.newLineAtOffset(-200,0);
+                contentStream.newLineAtOffset(75,0);
+                contentStream.showText(p.getNombre());
+                contentStream.newLineAtOffset(225,0);
+                contentStream.showText(Integer.toString(p.getCantidadPedida()));
+                contentStream.newLineAtOffset(160,0);
+                contentStream.showText(Double.toString(p.getPrecioTotalProducto()));
+                contentStream.newLineAtOffset(-460,0);
+
             }
 
+            contentStream.setFont(font,17);
             contentStream.newLine();
-            contentStream.showText("Total a Pagar: "+ c1.getPrecioTotal());
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.newLineAtOffset(375,0);
+            contentStream.showText("Total a Pagar:   ");
+
+            contentStream.setFont(font2,14);
+            contentStream.showText(Double.toString(c1.getPrecioTotal()));
 
             contentStream.endText();
             contentStream.close();
