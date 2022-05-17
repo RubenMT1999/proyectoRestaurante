@@ -35,9 +35,10 @@ class VentanaCliente extends JFrame {
         JButton boton1 = new JButton();
 
 
-        File menu = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\menu.bmp");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta+"\\imagenes\\menu.bmp");
         try {
-            Image imagenMenu = ImageIO.read(menu);
+            Image imagenMenu = ImageIO.read(miImagen);
             Image imagenResultado = imagenMenu.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
@@ -89,7 +90,8 @@ class ImagenCliente extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondoCliente.jpg");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta+"\\imagenes\\fondoCliente.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

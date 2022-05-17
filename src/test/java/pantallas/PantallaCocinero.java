@@ -34,9 +34,10 @@ class VentanaCocinero extends JFrame {
         JButton boton1 = new JButton();
 
 
-        File menu = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\comanda.bmp");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta+"\\imagenes\\comanda.bmp");;
         try {
-            Image imagenComanda = ImageIO.read(menu);
+            Image imagenComanda = ImageIO.read(miImagen);
             Image imagenResultado = imagenComanda.getScaledInstance(175,175,Image.SCALE_SMOOTH);
             boton1.setIcon(new ImageIcon(imagenResultado));
         } catch (Exception ex) {
@@ -85,7 +86,8 @@ class ImagenComanda extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\fondo_cocinero.jpg");
+        String ruta = new File("").getAbsolutePath();
+        File miImagen = new File(ruta+"\\imagenes\\fondo_cocinero.jpg");
         try{
             imagen= ImageIO.read(miImagen);
         }catch (IOException e){

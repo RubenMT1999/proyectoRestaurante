@@ -235,7 +235,8 @@ import java.util.stream.Collectors;
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            File miImagen = new File("C:\\Users\\dragu\\Desktop\\proyectoRestaurante\\imagenes\\carta_menu.jpg");
+            String ruta = new File("").getAbsolutePath();
+            File miImagen = new File(ruta+"\\imagenes\\carta_menu.jpg");
             try {
                 imagen = ImageIO.read(miImagen);
             } catch (IOException e) {
