@@ -220,9 +220,12 @@ public class MenuComandas extends JFrame {
                 Connection con = conectarConBD();
 
                 try{
-                    PreparedStatement stmt = con.prepareStatement("select c2.nombre,c.cantidad_pedida,c.precio" +
-                            " from consumicion c join pedido p on p.codigo = c.codigo_pedido \n" +
-                            "\tjoin carta c2 on c.id_producto =c2.id where p.id_mesa ="+ numeroMesa);
+                    PreparedStatement stmt = con.prepareStatement("select c2.nombre,c.cantidad_pedida,c.precio \n" +
+                            "from consumicion c \n" +
+                            "join pedido p on p.codigo = c.codigo_pedido \n" +
+                            "join carta c2 on c.id_producto =c2.id \n" +
+                            "join mesa m on p.id_mesa = m.id \n" +
+                            "where m.numero_mesa  ="+ numeroMesa);
 
                     ResultSet rs = stmt.executeQuery();
 
