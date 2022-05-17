@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
 import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
@@ -60,6 +61,8 @@ public class obtenerCuenta {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            cerrarConexion(conn);
         }
 
 

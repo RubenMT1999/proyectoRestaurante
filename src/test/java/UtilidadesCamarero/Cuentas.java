@@ -126,6 +126,9 @@ public class Cuentas extends JFrame{
 
                         new obtenerCuenta(id_mesa);
 
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "La cuenta ha sido creada");
+
 
                     }catch (Exception z){
                         System.out.println(z);
