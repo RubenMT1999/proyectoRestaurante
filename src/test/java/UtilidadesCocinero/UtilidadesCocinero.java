@@ -212,9 +212,6 @@ public class UtilidadesCocinero extends JFrame{
         setVisible(true);
         setResizable(false);
 
-
-
-
         }
 
     private JTable consultaComandas(JTable tabla1,int nummesa) {

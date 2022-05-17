@@ -11,12 +11,34 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import static UtilidadesBBDD.UtilidadesBBDD.cerrarConexion;
+import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 public class GenerarDocumento {
 
     public GenerarDocumento(Cuenta c1)  {
 
+        Connection conn = conectarConBD();
+
         try{
+
+            PreparedStatement stmt = conn.prepareStatement("select numero_mesa from mesa where id = ?");
+
+            stmt.setInt(1,c1.getId_mesa());
+            ResultSet rs = stmt.executeQuery();
+
+            int numero_mesa = 0;
+
+            if (rs.next()){
+                numero_mesa = rs.getInt("numero_mesa");
+            }
+
+
+
 
             PDDocument document = new PDDocument();
             PDPage page = new PDPage();
@@ -36,7 +58,7 @@ public class GenerarDocumento {
             contentStream.beginText();
             contentStream.setLeading(50f);
             contentStream.newLineAtOffset(50, 700);
-            contentStream.showText("ID Mesa: "+ c1.getId_mesa());
+            contentStream.showText("Numero de Mesa: "+ numero_mesa);
 
 
             contentStream.newLine();
@@ -101,6 +123,8 @@ public class GenerarDocumento {
 
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            cerrarConexion(conn);
         }
 
     }
