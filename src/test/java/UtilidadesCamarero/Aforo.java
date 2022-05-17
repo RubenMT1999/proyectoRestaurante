@@ -24,7 +24,7 @@ public class Aforo extends JFrame {
 
   public Aforo()
         {
-            setTitle("JButton in JTable");
+            setTitle("Aforo");
 
             JPanel panelExterno = new JPanel(new GridLayout(0,2,50,30));
             panelExterno.setBorder(BorderFactory.createEmptyBorder(10,10,10,30));
