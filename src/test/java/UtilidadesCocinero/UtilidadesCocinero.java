@@ -161,12 +161,14 @@ public class UtilidadesCocinero extends JFrame{
                     }
                 }
 
-                if (existe = true){Connection con = conectarConBD();
+                if (existe == true){Connection con = conectarConBD();
                     try {
                         CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
 
                         stmt2.setString(1, listaPedidos.get(0).getCodigo());
                         stmt2.executeQuery();
+                        JOptionPane.showMessageDialog(panelExterno,
+                                "Cuenta completada correctamente");
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     } finally {
@@ -175,6 +177,10 @@ public class UtilidadesCocinero extends JFrame{
 
 
                 }
+             else {
+                 JOptionPane.showMessageDialog(panelExterno,
+                         "Hasta que no esten los servidos igual a los pedidos no se puede completar");
+             }
 
             }
         });
