@@ -50,7 +50,7 @@ public class MenuComandas extends JFrame {
         JButton botonObtener = new JButton("Obtener");
 
         JPanel panelBotonObt = new JPanel(new GridLayout(1,2,80,10));
-        panelBotonObt.setBorder(BorderFactory.createEmptyBorder(90,20,50,50));
+        panelBotonObt.setBorder(BorderFactory.createEmptyBorder(40,20,50,50));
         Label labelVacio1 = new Label("");
 
         panelBotonObt.add(labelVacio1);
@@ -61,6 +61,8 @@ public class MenuComandas extends JFrame {
 
         DefaultTableModel model = new DefaultTableModel(data,col);
         JTable tabla1 = new JTable(model);
+
+        tabla1.setRowHeight(40);
 
 
         JScrollPane scrollPane = new JScrollPane(tabla1);
@@ -82,7 +84,7 @@ public class MenuComandas extends JFrame {
 
         panelTabla.add(scrollPane);
 
-        panelTabla.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+        panelTabla.setBorder(BorderFactory.createEmptyBorder(20,50,0,50));
 
         panelExterno.add(panelCombo);
         panelExterno.add(panelTabla);
@@ -255,7 +257,7 @@ public class MenuComandas extends JFrame {
         add(panelExterno);
 
 
-        setBounds(500,50,600,900);
+        setBounds(500,50,600,600);
 
 
     }

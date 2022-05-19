@@ -63,6 +63,7 @@ class VentanaCamarero extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 MenuComandas m1 = new MenuComandas();
                 m1.setVisible(true);
+                m1.setSize(600,600);
             }
         });
 

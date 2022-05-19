@@ -213,6 +213,7 @@ import java.util.stream.Collectors;
             setExtendedState(MAXIMIZED_BOTH);
             setVisible(true);
             pack();
+            setBounds(500,25,510,800);
 
 
         }
@@ -220,7 +221,7 @@ import java.util.stream.Collectors;
         public static void main(String[] args) {
             MenuCliente ven1 = new MenuCliente();
             ven1.setVisible(true);
-            ven1.setSize(510, 870);
+            ven1.setSize(510, 800);
 
 
 

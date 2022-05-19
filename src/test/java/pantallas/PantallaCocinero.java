@@ -59,7 +59,7 @@ class VentanaCocinero extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UtilidadesCocinero utC = new UtilidadesCocinero();
-                utC.setSize(800, 600);
+
             }
         });
 

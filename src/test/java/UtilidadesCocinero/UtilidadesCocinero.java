@@ -211,6 +211,7 @@ public class UtilidadesCocinero extends JFrame{
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
         setResizable(false);
+        setBounds(450,50,600,800);
 
         }
 
@@ -262,7 +263,7 @@ public class UtilidadesCocinero extends JFrame{
     public static void main(String[] args) {
         UtilidadesCocinero v1 = new UtilidadesCocinero();
         v1.setVisible(true);
-        v1.setSize(new Dimension(800, 600));
+        v1.setSize(new Dimension(600, 800));
     }
 
 }
