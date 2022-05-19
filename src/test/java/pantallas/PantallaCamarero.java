@@ -135,7 +135,7 @@ class VentanaCamarero extends JFrame {
 
 
 
-        setBounds(500,50,600,900);
+        setBounds(500,50,400,400);
 
 
 
