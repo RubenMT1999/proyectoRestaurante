@@ -161,12 +161,14 @@ public class UtilidadesCocinero extends JFrame{
                     }
                 }
 
-                if (existe = true){Connection con = conectarConBD();
+                if (existe == true){Connection con = conectarConBD();
                     try {
                         CallableStatement stmt2 = con.prepareCall("{call estado_pedido(?)}");
 
                         stmt2.setString(1, listaPedidos.get(0).getCodigo());
                         stmt2.executeQuery();
+
+
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     } finally {
