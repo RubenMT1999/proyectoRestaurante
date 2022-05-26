@@ -36,7 +36,7 @@ public class Cuentas extends JFrame{
         JScrollPane scrollPane = new JScrollPane(tabla1);
         tabla1.setFillsViewportHeight(true);
 
-
+        //Obtenemos todas las mesas
         List<Mesa> listaMesas = ObtenerMesas.obtenerMesas();
         Collections.reverse(listaMesas);
 
@@ -47,6 +47,7 @@ public class Cuentas extends JFrame{
         for (Mesa m : listaMesas){
 
             int contador = 0;
+            //Vemos los pedidos que tengan el id de esta mesa y que el estado pagado sea 0, es decir, aun no han pagado
             List<Pedido> p1 = listaPedidos.stream().filter(p->p.getId_mesa() == m.getId()).filter(p->p.getPagado() ==0)
                     .collect(Collectors.toList());
 
@@ -55,6 +56,7 @@ public class Cuentas extends JFrame{
                 String estado = "";
                 int prueba = p1.get(0).getEstado();
 
+                //Si el pedido está pagado es SÍ del contrario es NO
                 if (prueba == 0){
                     estado = "NO";
                 }else
@@ -64,6 +66,7 @@ public class Cuentas extends JFrame{
                   estado});
                 contador++;
             }else {
+                //Si no hay pedido con este id mesa y que no esté pagado por defecto saldrá NO
                 model.insertRow(contador,new Object[]{"                                   "+m.getNumeroMesa(),"                                 "+
                        " NO" });
                 contador++;
@@ -88,9 +91,12 @@ public class Cuentas extends JFrame{
         boton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //Obtenemos el numero de fila y luego vemos el valor que hay en la fila x y columna 1. Dará SI o NO.
                 int i = tabla1.getSelectedRow();
                 Object estado = model.getValueAt(i,1);
 
+                //Comprobamos si obtenemos un Sí o un NO
                 String estadoStr = String.valueOf(estado);
                 char letra = estadoStr.charAt(estadoStr.length()-1);
                 char si = 'Í';
@@ -104,6 +110,7 @@ public class Cuentas extends JFrame{
                     try{
                         CallableStatement stmt = con.prepareCall("{ call procedure_cuenta(?)}");
 
+                        //Obtenemos el número de mesa para pasárselo al procedure.
                         String obtenerMesa = String.valueOf(model.getValueAt(i,0));
                         char obtenerMesaStr= obtenerMesa.charAt(obtenerMesa.length()-1);
                         int obtenerMesaInt = Character.getNumericValue(obtenerMesaStr);
@@ -113,7 +120,7 @@ public class Cuentas extends JFrame{
                         ResultSet rs = stmt.executeQuery();
 
                     //--------------------------------------------------
-
+                        //Esto es para generar el pdf. Primero para obtener la cuenta le tenemos que pasar el idMesa.
                         PreparedStatement stmt2 = con.prepareStatement("select id from mesa where numero_mesa  = ?");
 
                         stmt2.setInt(1,obtenerMesaInt);

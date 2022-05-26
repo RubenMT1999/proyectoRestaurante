@@ -29,6 +29,7 @@ public class Aforo extends JFrame {
             JPanel panelExterno = new JPanel(new GridLayout(0,2,50,30));
             panelExterno.setBorder(BorderFactory.createEmptyBorder(10,10,10,30));
 
+            //Obtenemos todas la mesas
             List<Mesa> listaMesas = ObtenerMesas.obtenerMesas();
 
             JLabel labelMesas = new JLabel("      "+"Nº Mesa");
@@ -41,7 +42,7 @@ public class Aforo extends JFrame {
 
             contador = listaMesas.size();
 
-
+            //Para cada mesa que hay creamos un label con el número de mesa y un comboBox.
             for (Mesa m : listaMesas){
                 JLabel label1 = new JLabel("           "+String.valueOf(m.getNumeroMesa()));
                 JComboBox combo1 = new JComboBox();
@@ -49,6 +50,7 @@ public class Aforo extends JFrame {
                 combo1.addItem("Libre");
 
 
+                //De cada mesa, si la mesa está libre, el comboBox mostrará libre.
                 if (m.getLibre()==1){
                     combo1.setSelectedItem("Libre");
                 }else {
@@ -63,10 +65,13 @@ public class Aforo extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
+                        //Guardamos el valor del comboBox. Todas las mesas tienen el mismo comboBox.
                         int eleccion = combo1.getSelectedIndex();
 
                         Connection con = conectarConBD();
 
+                        //Hacemos el update de todas las mesas recorriéndolas desde la última a la primera
+                        //mediante el contador
                         try{
                             PreparedStatement query = con.prepareStatement("UPDATE mesa set libre = "
                                     +String.valueOf(eleccion)+
@@ -75,6 +80,8 @@ public class Aforo extends JFrame {
                             contador--;
                             ResultSet rs = query.executeQuery();
 
+                            //Cuando el contador sea 0 tenemos que resetearlo, sino cuando volvamos a querer
+                            //usar la ventana el contador estará a 0 y no funcionaria nada.
                             if (contador == 0){
                                 contador= listaMesas.size();
                                 JOptionPane.showMessageDialog(panelExterno,
