@@ -35,6 +35,7 @@ import static UtilidadesBBDD.UtilidadesBBDD.conectarConBD;
 
 
 public class UtilidadesCocinero extends JFrame{
+    //Aquí esta creado el jtable para que se quede como una ruta fija y se pueda utilizar la tabla modificando los datos con los botones y el fondo se quede fijo con una ruta fija
     private JTable tabla1 = new JTable() ;
     private static final ImageIcon fondoPantalla = new ImageIcon(getRutaImagenFondo());
 
@@ -44,7 +45,7 @@ public class UtilidadesCocinero extends JFrame{
     public UtilidadesCocinero() {
 
 
-
+        //LLamada al metodo del panel
         JPanel panelExterno = crearPanelImagenFondo(null);
 
         panelExterno.setOpaque(false);
@@ -54,11 +55,12 @@ public class UtilidadesCocinero extends JFrame{
 
 
         JLabel labelMesa = new JLabel("MESA");
-
+        //Obtencion de datos con un metodo creado con llamada a la base de datos
         List<Mesa> listaMesas = ObtenerMesas.obtenerMesas();
 
         JComboBox numMesa = new JComboBox<String>();
 
+        //Recorremos el numero de mesas y se crea una opcion por cada numero de mesa
         for (Mesa m1 : listaMesas){
             numMesa.addItem(m1.getNumeroMesa());
 
@@ -72,6 +74,7 @@ public class UtilidadesCocinero extends JFrame{
         botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //declaramos el numero de mesa como un entero para pasarle a la función el numero de mesa seleccionado
                 int num_mesa = (int) numMesa.getSelectedItem();
                 consultaComandas(tabla1,num_mesa);
                 tabla1.repaint();
@@ -85,12 +88,12 @@ public class UtilidadesCocinero extends JFrame{
         Font newFont = new Font("Monospaced",Font.BOLD,18);
 
         labelMesa.setFont(newFont);
-
+        //Panel para el label mesa
         JPanel panelMesa = new JPanel(new GridLayout(1,1));
 
         panelMesa.add(labelMesa);
 
-
+        //Panel para el combobox y el boton de buscar
         JPanel panelLabel1 = new JPanel(new GridLayout(1,1,10,10));
         panelLabel1.add(numMesa);
 
@@ -114,7 +117,9 @@ public class UtilidadesCocinero extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = tabla1.getSelectedRow();
+                //Seleccion en la tabla del producto para indicar el id que le vamos a pasar a la query de base de datos
                 String valorIds = tabla1.getModel().getValueAt(row,0).toString();
+                //Parseamos de string a entero ya que la query recibe un entero y no un String
                 int valorId = Integer.parseInt(valorIds);
                 Connection con = conectarConBD();
                 try {
@@ -123,6 +128,7 @@ public class UtilidadesCocinero extends JFrame{
                     query.executeQuery();
                     int num_mesa = (int) numMesa.getSelectedItem();
                     int sel = row - 1 ;
+                    //se vuelve a llamar a la funcion de consultar comandas para mostrar los datos actualizados
                     consultaComandas(tabla1,num_mesa);
                     tabla1.repaint();
 
@@ -148,7 +154,9 @@ public class UtilidadesCocinero extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 int num_mesa = (int) numMesa.getSelectedItem();
                 List<Pedido> listaPedidos = ObtenerPedido.obtenerPedidos();
+                // Filtramos las mesas
                 List<Mesa> mesa1 = listaMesas.stream().filter(mesa -> mesa.getNumeroMesa() == num_mesa).collect(Collectors.toList());
+                //Filtramos los pedidos por mesas
                 List<Pedido> l1 = listaPedidos.stream().filter(m -> m.getId_mesa()== mesa1.get(0).getId()).filter(p->p.getPagado()==0).collect(Collectors.toList());
 
                 int filas = tabla1.getRowCount();
@@ -222,15 +230,16 @@ public class UtilidadesCocinero extends JFrame{
         }
 
     private JTable consultaComandas(JTable tabla1,int nummesa) {
+        //Traemos las comandas de la base de datos pasandole el numero de mesa
         List<Consumicion> comandas = ObtenerComandas.ObtenerComandas(nummesa);
-
+        //Le damos las propiedades a la mesa con los nombres de las columnas, donde vamos a mostrar los datos
         String data[][] = {};
         String columnNames[] = {"Id","Producto", "Servida","Pedida"};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         tabla1.setModel(model);
 
-
+        //Insercion de filas recorriendo todas las comandas, y se crea una por cada comanda
         for (Consumicion c1 : comandas){
 
             model.insertRow(0, new Object[]{c1.getId(),c1.getId_producto(), c1.getCantidad_pedida(), c1.getCantidad_servida()});

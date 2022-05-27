@@ -25,7 +25,7 @@ public class ObtenerMesas {
             PreparedStatement query = con.prepareStatement("Select * from mesa");
             ResultSet rs = query.executeQuery();
 
-
+            //Importante construir el constructor para los datos que te pide
             while (rs.next()){
                 Mesa mesa1 = new Mesa(rs.getInt("id"), rs.getInt("numero_mesa")
                         ,rs.getInt("max_personas"), rs.getInt("libre"));
