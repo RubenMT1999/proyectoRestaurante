@@ -4,7 +4,7 @@ package pantallas;
 import UtilidadesAdmin.FormularioEmpleado;
 import UtilidadesAdmin.FormularioMesas;
 import UtilidadesAdmin.FormularioProductos;
-
+import examen.EjExamen1;
 
 
 import javax.imageio.ImageIO;
@@ -52,6 +52,9 @@ class VentanaAdmin extends JFrame {
         JButton boton1 = new JButton();
         JButton boton2 = new JButton();
         JButton boton3 = new JButton();
+        JButton boton4 = new JButton("RESEÑAS");
+
+
 
 
         File empleado = new File(getRutaEmpleado());
@@ -111,10 +114,20 @@ class VentanaAdmin extends JFrame {
             }
         });
 
+        boton4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EjExamen1 ex1 = new EjExamen1();
+                ex1.setVisible(true);
+                ex1.setSize(800,600);
+            }
+        });
+
 
         panelExterno.add(boton1);
         panelExterno.add(boton2);
         panelExterno.add(boton3);
+        panelExterno.add(boton4);
 
 
         Font fuenteBoton = new Font("Serif",Font.BOLD,15);
@@ -126,11 +139,14 @@ class VentanaAdmin extends JFrame {
                 fuenteBoton,Color.BLACK);
         Border esteBorde3 = new TitledBorder(bordeB1,"MESAS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
                 fuenteBoton,Color.BLACK);
+        Border esteBorde4 = new TitledBorder(bordeB1,"RESEÑAS",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION,
+                fuenteBoton,Color.BLACK);
 
 
         boton1.setBorder(esteBorde);
         boton2.setBorder(esteBorde2);
         boton3.setBorder(esteBorde3);
+        boton4.setBorder(esteBorde4);
 
 
 
