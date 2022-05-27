@@ -315,6 +315,7 @@ public class FormularioEmpleado extends JFrame {
         form1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         form1.setSize(500,800);
     }
+
 }
 
 
